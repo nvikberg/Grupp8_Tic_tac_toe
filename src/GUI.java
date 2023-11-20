@@ -87,6 +87,10 @@ class GUI implements ActionListener {
                 restartPanel(O);
                     //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
             }
+            else{
+                String lika = "Det blev lika!";
+                restartPanel(lika);
+            }
         }
     }
     //Karl
@@ -96,13 +100,13 @@ class GUI implements ActionListener {
     }
     //Karl
     void restartPanel(String vinnare){
-         int val = JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?",vinnare,JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,0);
+        int val = JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?",vinnare,JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,0);
         if(JOptionPane.YES_OPTION==val) {
             for (int i = 0; i < 9; i++) {
                 knappar[i].setText(""); //Metod som 0 sätter strängarna på knapparna så att man återigen kan klicka på dom.
             }
         }
         if(JOptionPane.NO_OPTION==val)
-            System.exit(0);
+            System.exit(0);            //Stänger programmet.
     }
 }

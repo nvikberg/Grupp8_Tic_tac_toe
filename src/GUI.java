@@ -46,17 +46,19 @@ class GUI implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         for(int i = 0; i < 9; i++){
-            if(e.getSource()==knappar[i]){
+            if(e.getSource()==knappar[i]){      //Kollar källan mot Arrayn av knappar.
                 if(spelare){
                     if(knappar[i].getText().isEmpty()){
+                        //Fonts Etc
                         //Designa knappen efter att spelaren har tryckt på den.
                         knappar[i].setText("O");
-                        spelare=false;
-                        check();
+                        spelare=false;              //Bytar mellan spelarna genom att sätta på och av boolen spelare.
+                        check();                    //Kollar efter varje knapp klick ifall det finns en vinnande kombination.
                     }
                 }
                 else{
                     if(knappar[i].getText().isEmpty()){
+                        //Fonts etc
                         //Designa knappen efter att spelare har tryckt på den.
                         knappar[i].setText("X");
                         spelare=true;
@@ -89,7 +91,7 @@ class GUI implements ActionListener {
             }
             else{
                 String lika = "Det blev lika!";
-                restartPanel(lika);
+                restartPanel(lika);             //Senario för lika.
             }
         }
     }
@@ -101,7 +103,7 @@ class GUI implements ActionListener {
     //Karl
     void restartPanel(String vinnare){
         int val = JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?",vinnare,JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,0);
-        if(JOptionPane.YES_OPTION==val) {
+        if(JOptionPane.YES_OPTION==val) {           //Tar int värdet från JOptionPane.YES_NO_OPTION som är 1 eller 0 och spara det i val.
             for (int i = 0; i < 9; i++) {
                 knappar[i].setText(""); //Metod som 0 sätter strängarna på knapparna så att man återigen kan klicka på dom.
             }

@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Objects;
 import java.util.Random;
 
 class GUI implements ActionListener {
@@ -94,8 +93,7 @@ class GUI implements ActionListener {
     }
     //Karl
     void startSlump(){
-        //Slumpar 0-1 och avgör om boolen ska bli false eller true (Splare1 / Spelare2)
-        spelare= random.nextInt(2) == 0;
+        spelare= random.nextInt(2) == 0; //Slumpar 0-1 och avgör om boolen ska bli false eller true (Splare1 / Spelare2)
     }
     //Karl
     void restartPanel(String vinnare){

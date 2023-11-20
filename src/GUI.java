@@ -20,7 +20,9 @@ class GUI implements ActionListener {
         knappar = new JButton[9];
 
         startSlump();
+
         //Metod för toppanel.
+        
         layoutCenter();
 
         frame.setVisible(true);
@@ -30,8 +32,8 @@ class GUI implements ActionListener {
         panelKnappar.setLayout(new GridLayout(3,3,1,1));
         frame.add(panelKnappar,BorderLayout.CENTER);
         for(int i = 0; i < 9; i++){
-            knappar[i] = new JButton();
-            knappar[i].addActionListener(this);
+            knappar[i] = new JButton();             //Lägger ut 9 knappar på en panel som är placerade i center.
+            knappar[i].addActionListener(this);     //Lägger till en AL och tar bort focusen så att dom ser lite snyggare ut.
             knappar[i].setFocusable(false);
             panelKnappar.add(knappar[i]);
         }
@@ -80,7 +82,7 @@ class GUI implements ActionListener {
         }
     }
     void startSlump(){
-        if(random.nextInt(2)==0){
+        if(random.nextInt(2)==0){   //Slumpar 0-1 och avgör om boolen ska bli false eller true (Splare1 / Spelare2)
             spelare=true;
         }
         else {
@@ -89,12 +91,12 @@ class GUI implements ActionListener {
     }
     void restart(){
         for(int i =0;i<9;i++){
-            knappar[i].setText("");
+            knappar[i].setText(""); //Metod som 0 sätter strängarna på knapparna så att man återigen kan klicka på dom.
         }
         try{
-            Thread.sleep(4000);
+            Thread.sleep(4000);         //Sleepar tråden i 4000ms för att man ska hinna se att man har vunnit innan det återställs.
         }catch (InterruptedException e){
-            System.out.println(e);
+            System.out.println(e);        //Try/Catch blocket är bara med för att sleep metoden ska funka.
         }
     }
 

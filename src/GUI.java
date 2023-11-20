@@ -80,7 +80,7 @@ class GUI implements ActionListener {
                 restartPanel(X);
                    //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
             }
-            if(knappar[vinst[0]].getText().equals("O") &&
+            else if(knappar[vinst[0]].getText().equals("O") &&
                     knappar[vinst[1]].getText().equals("O") &&
                     knappar[vinst[2]].getText().equals("O")){
                 String O="O är vinnaren!";
@@ -91,12 +91,8 @@ class GUI implements ActionListener {
     }
     //Karl
     void startSlump(){
-        if(random.nextInt(2)==0){   //Slumpar 0-1 och avgör om boolen ska bli false eller true (Splare1 / Spelare2)
-            spelare=true;
-        }
-        else {
-            spelare=false;
-        }
+        //Slumpar 0-1 och avgör om boolen ska bli false eller true (Splare1 / Spelare2)
+        spelare= random.nextInt(2) == 0;
     }
     //Karl
     void restartPanel(String vinnare){

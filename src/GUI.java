@@ -29,6 +29,7 @@ class GUI implements ActionListener {
 
         frame.setVisible(true);
     }
+    //Karl
     void layoutCenter(){
         panelKnappar = new JPanel();
         panelKnappar.setLayout(new GridLayout(3,3,1,1));
@@ -65,6 +66,7 @@ class GUI implements ActionListener {
             }
         }
     }
+    //Karl
     void check(){
         int[][] vinstAlternativ = {{0,1,2},{3,4,5},{6,7,8},  //Vågrät vinst.
                 {0,3,6},{1,4,7},{2,5,8}, //Lodrät vinst.
@@ -87,6 +89,7 @@ class GUI implements ActionListener {
             }
         }
     }
+    //Karl
     void startSlump(){
         if(random.nextInt(2)==0){   //Slumpar 0-1 och avgör om boolen ska bli false eller true (Splare1 / Spelare2)
             spelare=true;
@@ -95,6 +98,7 @@ class GUI implements ActionListener {
             spelare=false;
         }
     }
+    //Karl
     void restartPanel(String vinnare){
          int val = JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?",vinnare,JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,0);
         if(JOptionPane.YES_OPTION==val) {

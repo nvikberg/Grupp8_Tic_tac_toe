@@ -49,7 +49,7 @@ class GUI implements ActionListener {
                 if(spelare){
                     if(knappar[i].getText().isEmpty()){
                         //Designa knappen efter att spelaren har tryckt på den.
-
+                        knappar[i].setText("O");
                         spelare=false;
                         check();
                     }
@@ -57,7 +57,7 @@ class GUI implements ActionListener {
                 else{
                     if(knappar[i].getText().isEmpty()){
                         //Designa knappen efter att spelare har tryckt på den.
-
+                        knappar[i].setText("X");
                         spelare=true;
                         check();
                     }
@@ -70,15 +70,19 @@ class GUI implements ActionListener {
                 {0,3,6},{1,4,7},{2,5,8}, //Lodrät vinst.
                 {0,4,8},{2,4,6} //Vinst på diagonalen.
         };
-        for(int[] vinst: vinstAlternativ){
-            if(knappar[vinst[0]].getText().equals() &&
-                    knappar[vinst[1]].getText().equals() &&
-                    knappar[vinst[2]].getText().equals()){
+        for(int[] vinst: vinstAlternativ){      //Går igenom arrayen övan med alla korrekta möjligheter för vinst med hjälp av en for each loop.
+            if(knappar[vinst[0]].getText().equals("X") &&
+                    knappar[vinst[1]].getText().equals("X") &&
+                    knappar[vinst[2]].getText().equals("X")){
+                String X ="X är vinnaren!";
+                restartPanel(X);
                    //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
             }
-            if(knappar[vinst[0]].getText().equals() &&
-                    knappar[vinst[1]].getText().equals() &&
-                    knappar[vinst[2]].getText().equals()){
+            if(knappar[vinst[0]].getText().equals("O") &&
+                    knappar[vinst[1]].getText().equals("O") &&
+                    knappar[vinst[2]].getText().equals("O")){
+                String O="O är vinnaren!";
+                restartPanel(O);
                     //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
             }
         }
@@ -91,15 +95,17 @@ class GUI implements ActionListener {
             spelare=false;
         }
     }
+    void restartPanel(String vinnare){
+         JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?",vinnare,JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,0);
+        if(JOptionPane.YES_OPTION==0){
+            restart();
+        }
+        else
+            System.exit(0);
+    }
     void restart(){
         for(int i =0;i<9;i++){
             knappar[i].setText(""); //Metod som 0 sätter strängarna på knapparna så att man återigen kan klicka på dom.
         }
-        try{
-            Thread.sleep(4000);         //Sleepar tråden i 4000ms för att man ska hinna se att man har vunnit innan det återställs.
-        }catch (InterruptedException e){
-            System.out.println(e);        //Try/Catch blocket är bara med för att sleep metoden ska funka.
-        }
     }
-
 }

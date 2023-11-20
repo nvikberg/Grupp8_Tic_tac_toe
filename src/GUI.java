@@ -17,12 +17,14 @@ class GUI implements ActionListener {
         frame.setSize(500,500);
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
+        frame.setTitle("Tic Tac Toe");
+
         knappar = new JButton[9];
 
         startSlump();
 
         //Metod för toppanel.
-        
+
         layoutCenter();
 
         frame.setVisible(true);
@@ -71,13 +73,13 @@ class GUI implements ActionListener {
         for(int[] vinst: vinstAlternativ){
             if(knappar[vinst[0]].getText().equals() &&
                     knappar[vinst[1]].getText().equals() &&
-                    knappar[vinst[2]].getText().equals(){
-                   //Metod eller text för vad som händer fall den här ikonen vinner.
+                    knappar[vinst[2]].getText().equals()){
+                   //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
             }
             if(knappar[vinst[0]].getText().equals() &&
                     knappar[vinst[1]].getText().equals() &&
                     knappar[vinst[2]].getText().equals()){
-                    //Metod eller text för vad som händer fall den här ikonen vinner.
+                    //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
             }
         }
     }

@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 import java.util.Random;
 
 class GUI implements ActionListener {
@@ -88,10 +89,6 @@ class GUI implements ActionListener {
                 String O="O är vinnaren!";
                 restartPanel(O);
                     //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
-            }
-            else{
-                String lika = "Det blev lika!";
-                restartPanel(lika);             //Senario för lika.
             }
         }
     }

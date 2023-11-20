@@ -30,9 +30,14 @@ class Game implements ActionListener {
 
         //Metod för toppanel.
 
-        //layoutCenter();
-        layoutCenter2();
-        addPlayer();
+        layoutCenter();
+        //layoutCenter2();
+        for(int i = 0; i < 2; i++){
+            addPlayer(i);
+        }
+        for(Player player: players){
+            System.out.println(player.getName());
+        }
         frame.setVisible(true);
     }
     //Karl
@@ -127,12 +132,13 @@ class Game implements ActionListener {
             System.exit(0);            //Stänger programmet.
     }
 
-   public void addPlayer(){
+   public void addPlayer(int numberOfPlayer){
         // Create an object of class player. We will need 2 players in a Multiplayer game.
         // They will have their own symbol based on a randomized funtion to assign it.
-
-        String name = JOptionPane.showInputDialog("What is your name?");
+        String message = "Player "+ (numberOfPlayer + 1) + " name";
+        String name = JOptionPane.showInputDialog(message);
         players.add(new Player(name));
-       //TODO Add turn
+
+       //TODO Add player's turn
     }
 }

@@ -19,7 +19,7 @@ class GUI implements ActionListener {
         frame.setLayout(new BorderLayout());
         knappar = new JButton[9];
 
-
+        startSlump();
         //Metod för toppanel.
         layoutCenter();
 
@@ -47,7 +47,7 @@ class GUI implements ActionListener {
                         //Designa knappen efter att spelaren har tryckt på den.
 
                         spelare=false;
-                        vinst();
+                        check();
                     }
                 }
                 else{
@@ -55,14 +55,29 @@ class GUI implements ActionListener {
                         //Designa knappen efter att spelare har tryckt på den.
 
                         spelare=true;
-                        vinst();
+                        check();
                     }
                 }
             }
         }
     }
-    void vinst(){
-        if(knappar[0].getText())
+    void check(){
+        int[][] vinstAlternativ = {{0,1,2},{3,4,5},{6,7,8},  //Vågrät vinst.
+                {0,3,6},{1,4,7},{2,5,8}, //Lodrät vinst.
+                {0,4,8},{2,4,6} //Vinst på diagonalen.
+        };
+        for(int[] vinst: vinstAlternativ){
+            if(knappar[vinst[0]].getText().equals() &&
+                    knappar[vinst[1]].getText().equals() &&
+                    knappar[vinst[2]].getText().equals(){
+                   //Metod eller text för vad som händer fall den här ikonen vinner.
+            }
+            if(knappar[vinst[0]].getText().equals() &&
+                    knappar[vinst[1]].getText().equals() &&
+                    knappar[vinst[2]].getText().equals()){
+                    //Metod eller text för vad som händer fall den här ikonen vinner.
+            }
+        }
     }
     void startSlump(){
         if(random.nextInt(2)==0){

@@ -97,15 +97,12 @@ class GUI implements ActionListener {
     }
     void restartPanel(String vinnare){
          JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?",vinnare,JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,0);
-        if(JOptionPane.YES_OPTION==0){
-            restart();
+        if(JOptionPane.YES_OPTION==0) {
+            for (int i = 0; i < 9; i++) {
+                knappar[i].setText(""); //Metod som 0 sätter strängarna på knapparna så att man återigen kan klicka på dom.
+            }
         }
         else
             System.exit(0);
-    }
-    void restart(){
-        for(int i =0;i<9;i++){
-            knappar[i].setText(""); //Metod som 0 sätter strängarna på knapparna så att man återigen kan klicka på dom.
-        }
     }
 }

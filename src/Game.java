@@ -2,18 +2,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Objects;
+import java.util.ArrayList;
 import java.util.Random;
 
-class GUI implements ActionListener {
+class Game implements ActionListener {
 
     JFrame frame;
     Random random = new Random();
     JPanel panelKnappar;
     JButton[] knappar;
+    private JButton buttons;
     boolean spelare;
 
-    GUI(){
+
+    private ArrayList<Player> players = new ArrayList<Player>();
+
+    Game(){
         frame = new JFrame();
         frame.setSize(500,500);
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
@@ -26,8 +30,9 @@ class GUI implements ActionListener {
 
         //Metod för toppanel.
 
-        layoutCenter();
-
+        //layoutCenter();
+        layoutCenter2();
+        addPlayer();
         frame.setVisible(true);
     }
     //Karl
@@ -40,6 +45,20 @@ class GUI implements ActionListener {
             knappar[i].addActionListener(this);     //Lägger till en AL och tar bort focusen så att dom ser lite snyggare ut.
             knappar[i].setFocusable(false);
             panelKnappar.add(knappar[i]);
+        }
+    }
+
+    void layoutCenter2(){
+        panelKnappar = new JPanel();
+        panelKnappar.setLayout(new GridLayout(3,3,1,1));
+        frame.add(panelKnappar,BorderLayout.CENTER);
+        for(int i = 1; i < 4; i++){
+            for(int j = 1; j < 4; j++){
+                buttons = new JButton();
+                buttons.setActionCommand(""+i+j);
+                buttons.addActionListener(this);
+                panelKnappar.add(buttons);
+            }
         }
     }
 
@@ -94,8 +113,7 @@ class GUI implements ActionListener {
     }
     //Karl
     void startSlump(){
-        //Slumpar 0-1 och avgör om boolen ska bli false eller true (Splare1 / Spelare2)
-        spelare= random.nextInt(2) == 0;
+        spelare= random.nextInt(2) == 0; //Slumpar 0-1 och avgör om boolen ska bli false eller true (Splare1 / Spelare2)
     }
     //Karl
     void restartPanel(String vinnare){
@@ -107,5 +125,14 @@ class GUI implements ActionListener {
         }
         if(JOptionPane.NO_OPTION==val)
             System.exit(0);            //Stänger programmet.
+    }
+
+   public void addPlayer(){
+        // Create an object of class player. We will need 2 players in a Multiplayer game.
+        // They will have their own symbol based on a randomized funtion to assign it.
+
+        String name = JOptionPane.showInputDialog("What is your name?");
+        players.add(new Player(name));
+       //TODO Add turn
     }
 }

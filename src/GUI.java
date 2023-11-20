@@ -2,12 +2,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 class GUI implements ActionListener {
 
     JFrame frame;
-    JPanel panel;
+    Random random = new Random();
+    JPanel panelKnappar;
     JButton[] knappar;
+    boolean spelare;
 
     GUI(){
         frame = new JFrame();
@@ -23,26 +26,61 @@ class GUI implements ActionListener {
         frame.setVisible(true);
     }
     void layoutCenter(){
-        panel = new JPanel();
-        panel.setLayout(new GridLayout(3,3,1,1));
-        frame.add(panel,BorderLayout.CENTER);
+        panelKnappar = new JPanel();
+        panelKnappar.setLayout(new GridLayout(3,3,1,1));
+        frame.add(panelKnappar,BorderLayout.CENTER);
         for(int i = 0; i < 9; i++){
             knappar[i] = new JButton();
             knappar[i].addActionListener(this);
-            panel.add(knappar[i]);
+            knappar[i].setFocusable(false);
+            panelKnappar.add(knappar[i]);
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JButton source = (JButton) e.getSource();
 
         for(int i = 0; i < 9; i++){
-            if(source==knappar[i]){
-                knappar[i].setText("XXXxxxXXXXXXX");
-                panel.revalidate();
-                panel.repaint();
+            if(e.getSource()==knappar[i]){
+                if(spelare){
+                    if(knappar[i].getText().isEmpty()){
+                        //Designa knappen efter att spelaren har tryckt på den.
+
+                        spelare=false;
+                        vinst();
+                    }
+                }
+                else{
+                    if(knappar[i].getText().isEmpty()){
+                        //Designa knappen efter att spelare har tryckt på den.
+
+                        spelare=true;
+                        vinst();
+                    }
+                }
             }
         }
     }
+    void vinst(){
+        if(knappar[0].getText())
+    }
+    void startSlump(){
+        if(random.nextInt(2)==0){
+            spelare=true;
+        }
+        else {
+            spelare=false;
+        }
+    }
+    void restart(){
+        for(int i =0;i<9;i++){
+            knappar[i].setText("");
+        }
+        try{
+            Thread.sleep(4000);
+        }catch (InterruptedException e){
+            System.out.println(e);
+        }
+    }
+
 }

@@ -14,27 +14,22 @@ class Game implements ActionListener {
     JButton[] knappar;
     boolean spelare;
     final ArrayList<String> players = new ArrayList<>();
-    HashMap<String,Integer> scoreBoard;
+    HashMap<String,Integer> scoreBoard = new HashMap<>();
     Game(){
         frame = new JFrame();
         frame.setSize(500,500);
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.setTitle("Tic Tac Toe");
-
         knappar = new JButton[9];
         startSlump();
         layoutCenter();
         addPlayer();
-        score();
+        scoreBoard.put(players.getFirst(),0);
+        scoreBoard.put(players.getLast(),0);
         layoutTop();
         layoutBottom();
         frame.setVisible(true);
-    }
-    void score(){
-        scoreBoard = new HashMap<>();
-        scoreBoard.put(players.getFirst(),0);
-        scoreBoard.put(players.getLast(),0);
     }
     void layoutCenter(){
         panelKnappar = new JPanel();
@@ -49,13 +44,13 @@ class Game implements ActionListener {
     }
     void layoutBottom(){
         JPanel bottom = new JPanel();
-        bottom.setLayout(new FlowLayout());
-        JButton reset = new JButton("Restart!");
-        reset.setFocusable(false);
-        reset.addActionListener(new ActionListener() {
+        bottom.setLayout(new FlowLayout());                 //Sätter en panel i botten av framen.
+        JButton reset = new JButton("Restart!");            //Skapar en knapp för att kunna 0 ställa spelplanen.
+        reset.setFocusable(false);                          //Tarbort focusen från knapparna.
+        reset.addActionListener(new ActionListener() {      //Skapar en anonym AL som ska funka specifikt för den knappen.
             @Override
             public void actionPerformed(ActionEvent e) {
-                for(int i = 0; i < 9; i++){
+                for(int i = 0; i < 9; i++){                 //0ar alla knappar.
                     knappar[i].setText("");
                     startSlump();
                     layoutTop();
@@ -71,14 +66,14 @@ class Game implements ActionListener {
             name = players.getFirst();
 
         else
-            name = players.getLast();
+            name = players.getLast();               //Bestämmer vem som ska börja beroende på om boolen bli falsk eller true.
 
         JPanel top = new JPanel();
-        top.setLayout(new FlowLayout());
-        JLabel turn = new JLabel(name);
+        top.setLayout(new FlowLayout());            //Sätter flowlayout mest för att det ser snyggare ut om det är centrerat.
+        JLabel turn = new JLabel(name);             //Sätter JLabelns namn till rätt persons tur.
         top.add(turn);
-        frame.add(top,BorderLayout.NORTH);
-        top.revalidate();
+        frame.add(top,BorderLayout.NORTH);          //Lägger ny panel i NORTH på framen.
+        top.revalidate();                           //Revalidatar och repaintar panelen varjegång metoden kallas så att texten updateras.
         top.repaint();
     }
     @Override
@@ -149,7 +144,7 @@ class Game implements ActionListener {
             System.exit(0);                                     //Stänger programmet.
         }
     }
-   public void addPlayer(){                                     //Fråga efter namn på spelarna. TODO Designa fönstert
+   public void addPlayer(){                                     //Fråga efter namn på spelarna.
        for(int i= 1;i<3;i++){
            String message = "Player "+ (i) + " name";            // Create an object of class player. We will need 2 players in a Multiplayer game.
            String name = JOptionPane.showInputDialog(message);   // They will have their own symbol based on a randomized funtion to assign it.
@@ -157,3 +152,9 @@ class Game implements ActionListener {
        }
     }
 }
+/*
+TODO
+Designa:
+Fönster,Knappar,JOptionPanes,
+Lägga till ljud för VG alternativt nytt GM.
+*/

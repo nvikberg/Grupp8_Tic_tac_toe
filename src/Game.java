@@ -11,11 +11,14 @@ class Game implements ActionListener {
     Random random = new Random();
     JPanel panelKnappar;
     JButton[] knappar;
-    private JButton buttons;
+    private ArrayList<JButton> buttons = new ArrayList<JButton>();
+    private JButton button;
     boolean spelare;
 
 
     private ArrayList<Player> players = new ArrayList<Player>();
+    private ArrayList<String> winConditions = new ArrayList<>();
+
 
     Game(){
         frame = new JFrame();
@@ -58,17 +61,29 @@ class Game implements ActionListener {
         frame.add(panelKnappar,BorderLayout.CENTER);
         for(int i = 1; i < 4; i++){
             for(int j = 1; j < 4; j++){
-                buttons = new JButton();
-                buttons.setActionCommand(""+i+j);
-                buttons.addActionListener(this);
-                panelKnappar.add(buttons);
+                button = new JButton();
+                button.setName(""+i+j);
+                button.setActionCommand(""+i+j);
+                button.addActionListener(this);
+                buttons.add(button);
             }
+        }
+        for(JButton button : buttons){
+            panelKnappar.add(button);
         }
     }
 
     @Override
+
     public void actionPerformed(ActionEvent e) {
-        String playedButton = buttons.getActionCommand();
+        String playedButton = e.getActionCommand();
+        String playerSign = currentPlayerChoice(playedButton);
+        for(JButton button : buttons){
+            if(button.getActionCommand().equals(playedButton)) {
+                button.setText(playerSign);
+                button.setEnabled(false);
+            }
+        }
         //System.out.println(e.getSource()==buttons[playedButton]);
         for(int i = 0; i < 9; i++){
             if(e.getSource()==knappar[i]){      //Kollar källan mot Arrayn av knappar.
@@ -153,11 +168,26 @@ class Game implements ActionListener {
         int decideFirst = random.nextInt(1, 101);
         if(decideFirst % 2 == 0){
             players.get(0).setPlayerOrder(1);
+            players.get(0).setCurrent(true);
             players.get(1).setPlayerOrder(2);
         } else {
             players.get(0).setPlayerOrder(2);
             players.get(1).setPlayerOrder(1);
+            players.get(1).setCurrent(true);
         }
     }
 
+    public String currentPlayerChoice(String playedButton){
+            if(players.get(0).isCurrent()){
+                players.get(0).makeChoice(playedButton);
+                players.get(0).setCurrent(false);
+                players.get(1).setCurrent(true);
+                return players.get(0).playerSign;
+            } else {
+                players.get(1).makeChoice(playedButton);
+                players.get(1).setCurrent(false);
+                players.get(0).setCurrent(true);
+                return players.get(1).playerSign;
+            }
+    }
 }

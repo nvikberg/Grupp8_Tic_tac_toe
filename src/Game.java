@@ -30,12 +30,13 @@ class Game implements ActionListener {
 
         //Metod för toppanel.
 
-        //layoutCenter();
+        layoutCenter();
 
         //To open a more working version uncomment row 33 and comment the next 3 rows.
-        layoutCenter2();
+        //layoutCenter2();
         addPlayers();
         assignTurnOrder();
+        layoutTop();
 
         frame.setVisible(true);
     }
@@ -50,6 +51,22 @@ class Game implements ActionListener {
             knappar[i].setFocusable(false);
             panelKnappar.add(knappar[i]);
         }
+    }
+    void layoutTop(){
+        String name;
+        if(spelare)
+            name = players.getFirst().getName();
+
+        else
+            name = players.getLast().getName();
+
+        JPanel top = new JPanel();
+        top.setLayout(new FlowLayout());
+        JLabel turn = new JLabel(name);
+        top.add(turn);
+        frame.add(top,BorderLayout.NORTH);
+        top.revalidate();
+        top.repaint();
     }
 
     void layoutCenter2(){
@@ -68,24 +85,26 @@ class Game implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String playedButton = buttons.getActionCommand();
+        //String playedButton = buttons.getActionCommand();
         //System.out.println(e.getSource()==buttons[playedButton]);
         for(int i = 0; i < 9; i++){
             if(e.getSource()==knappar[i]){      //Kollar källan mot Arrayn av knappar.
                 if(spelare){
                     if(knappar[i].getText().isEmpty()){
+                        layoutTop();
                         //Fonts Etc
                         //Designa knappen efter att spelaren har tryckt på den.
-                        knappar[i].setText("O");
+                        knappar[i].setText("X");
                         spelare=false;              //Bytar mellan spelarna genom att sätta på och av boolen spelare.
                         check();                    //Kollar efter varje knapp klick ifall det finns en vinnande kombination.
                     }
                 }
                 else{
                     if(knappar[i].getText().isEmpty()){
+                        layoutTop();
                         //Fonts etc
                         //Designa knappen efter att spelare har tryckt på den.
-                        knappar[i].setText("X");
+                        knappar[i].setText("O");
                         spelare=true;
                         check();
                     }

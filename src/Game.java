@@ -13,7 +13,7 @@ class Game implements ActionListener {
     JPanel panelKnappar;
     JButton[] knappar;
     boolean spelare;
-    final ArrayList<String> players = new ArrayList<String>();
+    final ArrayList<String> players = new ArrayList<>();
     HashMap<String,Integer> scoreBoard;
     Game(){
         frame = new JFrame();

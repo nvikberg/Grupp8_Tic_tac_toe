@@ -11,14 +11,9 @@ class Game implements ActionListener {
     Random random = new Random();
     JPanel panelKnappar;
     JButton[] knappar;
-    private ArrayList<JButton> buttons = new ArrayList<JButton>();
-    private JButton button;
     boolean spelare;
-
-
     private ArrayList<Player> players = new ArrayList<Player>();
     private ArrayList<String> winConditions = new ArrayList<>();
-
 
     Game(){
         frame = new JFrame();
@@ -31,10 +26,8 @@ class Game implements ActionListener {
 
         startSlump();
 
-        //Metod för toppanel.
-
         layoutCenter();
-        addPlayers();
+        addPlayer();
         layoutTop();
 
         frame.setVisible(true);
@@ -67,48 +60,29 @@ class Game implements ActionListener {
         top.revalidate();
         top.repaint();
     }
-
-    void layoutCenter2(){
-        panelKnappar = new JPanel();
-        panelKnappar.setLayout(new GridLayout(3,3,1,1));
-        frame.add(panelKnappar,BorderLayout.CENTER);
-        for(int i = 1; i < 4; i++){
-            for(int j = 1; j < 4; j++){
-                button = new JButton();
-                button.setName(""+i+j);
-                button.setActionCommand(""+i+j);
-                button.addActionListener(this);
-                buttons.add(button);
-            }
-        }
-        for(JButton button : buttons){
-            panelKnappar.add(button);
-        }
-    }
-
     @Override
-
     public void actionPerformed(ActionEvent e) {
-        //System.out.println(e.getSource()==buttons[playedButton]);
         for(int i = 0; i < 9; i++){
-            if(e.getSource()==knappar[i]){      //Kollar källan mot Arrayn av knappar.
+            if(e.getSource()==knappar[i]){                  //Kollar källan mot Arrayn av knappar.
                 if(spelare){
                     if(knappar[i].getText().isEmpty()){
-                        layoutTop();
-                        //Fonts Etc
-                        //Designa knappen efter att spelaren har tryckt på den.
+
+                                                            //Fonts Etc
+                                                            //Designa knappen efter att spelaren har tryckt på den.
                         knappar[i].setText("X");
-                        spelare=false;              //Bytar mellan spelarna genom att sätta på och av boolen spelare.
-                        check();                    //Kollar efter varje knapp klick ifall det finns en vinnande kombination.
+                        spelare=false;
+                        layoutTop();                        //Bytar mellan spelarna genom att sätta på och av boolen spelare.
+                        check();                            //Kollar efter varje knapp klick ifall det finns en vinnande kombination.
                     }
                 }
                 else{
                     if(knappar[i].getText().isEmpty()){
-                        layoutTop();
-                        //Fonts etc
-                        //Designa knappen efter att spelare har tryckt på den.
+
+                                                            //Fonts etc
+                                                            //Designa knappen efter att spelare har tryckt på den.
                         knappar[i].setText("O");
                         spelare=true;
+                        layoutTop();
                         check();
                     }
                 }
@@ -118,54 +92,43 @@ class Game implements ActionListener {
     //Karl
     void check(){
         int[][] vinstAlternativ = {{0,1,2},{3,4,5},{6,7,8},  //Vågrät vinst.
-                {0,3,6},{1,4,7},{2,5,8}, //Lodrät vinst.
-                {0,4,8},{2,4,6} //Vinst på diagonalen.
+                {0,3,6},{1,4,7},{2,5,8},                    //Lodrät vinst.
+                {0,4,8},{2,4,6}                             //Vinst på diagonalen.
         };
-        for(int[] vinst: vinstAlternativ){      //Går igenom arrayen övan med alla korrekta möjligheter för vinst med hjälp av en for each loop.
+        for(int[] vinst: vinstAlternativ){                  //Går igenom arrayen övan med alla korrekta möjligheter för vinst med hjälp av en for each loop.
             if(knappar[vinst[0]].getText().equals("X") &&
                     knappar[vinst[1]].getText().equals("X") &&
                     knappar[vinst[2]].getText().equals("X")){
-                String X ="X är vinnaren!";
-                restartPanel(X);
-                   //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
+                restartPanel(players.getFirst().getName()+" är vinnaren!!"); //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
             }
             else if(knappar[vinst[0]].getText().equals("O") &&
                     knappar[vinst[1]].getText().equals("O") &&
                     knappar[vinst[2]].getText().equals("O")){
-                String O="O är vinnaren!";
-                restartPanel(O);
-                    //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
+                restartPanel(players.getLast().getName()+" är vinnaren!!"); //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
             }
         }
     }
     //Karl
     void startSlump(){
-        spelare= random.nextInt(2) == 0; //Slumpar 0-1 och avgör om boolen ska bli false eller true (Splare1 / Spelare2)
+        spelare= random.nextInt(2) == 0;                    //Slumpar 0-1 och avgör om boolen ska bli false eller true (Splare1 / Spelare2)
     }
     //Karl
     void restartPanel(String vinnare){
         int val = JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?",vinnare,JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,0);
-        if(JOptionPane.YES_OPTION==val) {           //Tar int värdet från JOptionPane.YES_NO_OPTION som är 1 eller 0 och spara det i val.
+        if(JOptionPane.YES_OPTION==val) {                   //Tar int värdet från JOptionPane.YES_NO_OPTION som är 1 eller 0 och spara det i val.
             for (int i = 0; i < 9; i++) {
-                knappar[i].setText(""); //Metod som 0 sätter strängarna på knapparna så att man återigen kan klicka på dom.
+                knappar[i].setText("");                     //Metod som 0 sätter strängarna på knapparna så att man återigen kan klicka på dom.
             }
         }
         if(JOptionPane.NO_OPTION==val)
-            System.exit(0);            //Stänger programmet.
+            System.exit(0);                                 //Stänger programmet.
     }
+   public void addPlayer(){                                     //Fråga efter namn på spelarna. TODO Designa fönstert
+       for(int i= 1;i<3;i++){
+           String message = "Player "+ (i) + " name";            // Create an object of class player. We will need 2 players in a Multiplayer game.
+           String name = JOptionPane.showInputDialog(message);   // They will have their own symbol based on a randomized funtion to assign it.
+           players.add(new Player(name));
+       }
 
-    //Show the window to ask for the player's names. TODO Can be designed
-   public void addPlayer(int numberOfPlayer){
-        // Create an object of class player. We will need 2 players in a Multiplayer game.
-        // They will have their own symbol based on a randomized funtion to assign it.
-        String message = "Player "+ (numberOfPlayer + 1) + " name";
-        String name = JOptionPane.showInputDialog(message);
-        players.add(new Player(name));
     }
-    public void addPlayers(){
-        for(int i = 0; i < 2; i++){
-            addPlayer(i);
-        }
-    }
-
 }

@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 class Game implements ActionListener {
@@ -12,7 +13,8 @@ class Game implements ActionListener {
     JPanel panelKnappar;
     JButton[] knappar;
     boolean spelare;
-    private ArrayList<Player> players = new ArrayList<Player>();
+    final ArrayList<String> players = new ArrayList<String>();
+    HashMap<String,Integer> scoreBoard;
     Game(){
         frame = new JFrame();
         frame.setSize(500,500);
@@ -21,15 +23,18 @@ class Game implements ActionListener {
         frame.setTitle("Tic Tac Toe");
 
         knappar = new JButton[9];
-
         startSlump();
-
         layoutCenter();
         addPlayer();
         layoutTop();
-
         frame.setVisible(true);
     }
+    void score(){
+        scoreBoard = new HashMap<>();
+        scoreBoard.put(players.getFirst(),0);
+        scoreBoard.put(players.getLast(),0);
+    }
+
     //Karl
     void layoutCenter(){
         panelKnappar = new JPanel();
@@ -45,10 +50,10 @@ class Game implements ActionListener {
     void layoutTop(){
         String name;
         if(spelare)
-            name = players.getFirst().getName();
+            name = players.getFirst();
 
         else
-            name = players.getLast().getName();
+            name = players.getLast();
 
         JPanel top = new JPanel();
         top.setLayout(new FlowLayout());
@@ -97,12 +102,13 @@ class Game implements ActionListener {
             if(knappar[vinst[0]].getText().equals("X") &&
                     knappar[vinst[1]].getText().equals("X") &&
                     knappar[vinst[2]].getText().equals("X")){
-                restartPanel(players.getFirst().getName()+" är vinnaren!!"); //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
+                restartPanel(players.getFirst()); //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
             }
-            else if(knappar[vinst[0]].getText().equals("O") &&
+            if(knappar[vinst[0]].getText().equals("O") &&
                     knappar[vinst[1]].getText().equals("O") &&
                     knappar[vinst[2]].getText().equals("O")){
-                restartPanel(players.getLast().getName()+" är vinnaren!!"); //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
+
+                restartPanel(players.getLast()); //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
             }
         }
     }
@@ -112,21 +118,27 @@ class Game implements ActionListener {
     }
     //Karl
     void restartPanel(String vinnare){
-        int val = JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?",vinnare,JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,0);
+        int val = JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?",vinnare+" är vinnaren!!",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,0);
+        scoreBoard.put(vinnare,+1);
         if(JOptionPane.YES_OPTION==val) {                   //Tar int värdet från JOptionPane.YES_NO_OPTION som är 1 eller 0 och spara det i val.
             for (int i = 0; i < 9; i++) {
                 knappar[i].setText("");                     //Metod som 0 sätter strängarna på knapparna så att man återigen kan klicka på dom.
             }
         }
-        if(JOptionPane.NO_OPTION==val)
-            System.exit(0);                                 //Stänger programmet.
+        if(JOptionPane.NO_OPTION==val){
+            int player1Score = scoreBoard.get(players.getFirst());
+            int player2Score = scoreBoard.get(players.getLast());
+            int close = JOptionPane.showOptionDialog(null,players.getFirst()+player1Score+": poäng! \n" +players.getLast()+player2Score+": poäng!","Scoreboard",JOptionPane.CLOSED_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,0);
+
+            if(close == JOptionPane.CLOSED_OPTION)
+             System.exit(0);                                 //Stänger programmet.
+        }
     }
    public void addPlayer(){                                     //Fråga efter namn på spelarna. TODO Designa fönstert
        for(int i= 1;i<3;i++){
            String message = "Player "+ (i) + " name";            // Create an object of class player. We will need 2 players in a Multiplayer game.
            String name = JOptionPane.showInputDialog(message);   // They will have their own symbol based on a randomized funtion to assign it.
-           players.add(new Player(name));
+           players.add(name);
        }
-
     }
 }

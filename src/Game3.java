@@ -166,6 +166,10 @@ public class Game3 extends JFrame implements ActionListener {
                 }
             }
         }
+        if (playerXScore>playerOScore){
+            resultTextArea.append("Player X has the maximum points!\n");
+        }
+
 
     }
 }

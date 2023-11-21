@@ -115,7 +115,8 @@ class Game implements ActionListener {
     }
     void restartPanel(String vinnare){
         int val = JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?",vinnare+" är vinnaren!!",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,0);
-        scoreBoard.put(vinnare,+1);
+        int score = scoreBoard.get(vinnare)+1;
+        scoreBoard.put(vinnare,score);
         if(JOptionPane.YES_OPTION==val) {                   //Tar int värdet från JOptionPane.YES_NO_OPTION som är 1 eller 0 och spara det i val.
             for (int i = 0; i < 9; i++) {
                 knappar[i].setText("");                     //Metod som 0 sätter strängarna på knapparna så att man återigen kan klicka på dom.

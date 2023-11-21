@@ -47,14 +47,13 @@ class Game implements ActionListener {
         bottom.setLayout(new FlowLayout());                 //Sätter en panel i botten av framen.
         JButton reset = new JButton("Restart!");            //Skapar en knapp för att kunna 0 ställa spelplanen.
         reset.setFocusable(false);                          //Tarbort focusen från knapparna.
-        reset.addActionListener(new ActionListener() {      //Skapar en anonym AL som ska funka specifikt för den knappen.
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for(int i = 0; i < 9; i++){                 //0ar alla knappar.
-                    knappar[i].setText("");
-                    startSlump();
-                    layoutTop();
-                }
+        //Skapar en anonym AL som ska funka specifikt för den knappen.
+        reset.addActionListener(e -> {                   //Använder ett lambda uttryck för att minska koden.
+            for(int i = 0; i < knappar.length; i++){                 //0ar alla knappar.
+                knappar[i].setText("");
+                startSlump();
+                layoutTop();
+
             }
         });
         bottom.add(reset);
@@ -78,7 +77,7 @@ class Game implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        for(int i = 0; i < 9; i++){
+        for(int i = 0; i < knappar.length; i++){
             if(e.getSource()==knappar[i]){                  //Kollar källan mot Arrayn av knappar.
                 if(spelare){
                     if(knappar[i].getText().isEmpty()){
@@ -111,9 +110,9 @@ class Game implements ActionListener {
                 {0,4,8},{2,4,6}                             //Vinst på diagonalen.
         };
         for(int[] vinst: vinstAlternativ){                  //Går igenom arrayen övan med alla korrekta möjligheter för vinst med hjälp av en for each loop.
-            if(knappar[vinst[0]].getText().equals("X") &&
-                    knappar[vinst[1]].getText().equals("X") &&
-                    knappar[vinst[2]].getText().equals("X")){
+            if(knappar[vinst[0]].getText().equals("X") &&        //Kollar dom vågräta alternativen.
+                    knappar[vinst[1]].getText().equals("X") &&   //Kollar dom lodräta alternativen.
+                    knappar[vinst[2]].getText().equals("X")){    //Kollar dom diagonala alternativen.
                 restartPanel(players.getFirst()); //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
             }
             if(knappar[vinst[0]].getText().equals("O") &&
@@ -132,7 +131,7 @@ class Game implements ActionListener {
         int score = scoreBoard.get(vinnare)+1;
         scoreBoard.put(vinnare,score);
         if(JOptionPane.YES_OPTION==val) {                   //Tar int värdet från JOptionPane.YES_NO_OPTION som är 1 eller 0 och spara det i val.
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < knappar.length; i++) {
                 knappar[i].setText("");                     //Metod som 0 sätter strängarna på knapparna så att man återigen kan klicka på dom.
             }
         }

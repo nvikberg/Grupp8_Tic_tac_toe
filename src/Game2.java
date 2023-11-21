@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 class Game2 implements ActionListener {
@@ -15,7 +16,7 @@ class Game2 implements ActionListener {
 
 
     private ArrayList<Player> players = new ArrayList<Player>();
-    private ArrayList<String> winConditions = new ArrayList<>();
+    private HashMap<String, String[]> winConditions = new HashMap<>();
 
 
     Game2(){
@@ -32,8 +33,6 @@ class Game2 implements ActionListener {
 
         frame.setVisible(true);
     }
-    //Karl
-
 
     void layoutCenter2(){
         panelKnappar = new JPanel();
@@ -113,5 +112,16 @@ class Game2 implements ActionListener {
             players.get(0).setCurrent(true);
             return players.get(1).playerSign;
         }
+    }
+
+    public void createWinConditions(){
+        winConditions.put("row 1", new String[]{"11", "12", "13"});
+        winConditions.put("row 2", new String[]{"21", "22", "23"});
+        winConditions.put("row 3", new String[]{"31", "32", "33"});
+        winConditions.put("col 1", new String[]{"11", "21", "31"});
+        winConditions.put("col 2", new String[]{"12", "22", "32"});
+        winConditions.put("col 3", new String[]{"13", "23", "33"});
+        winConditions.put("diag 1", new String[]{"11", "22", "33"});
+        winConditions.put("diag 2", new String[]{"13", "22", "31"});
     }
 }

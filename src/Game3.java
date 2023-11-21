@@ -168,6 +168,11 @@ public class Game3 extends JFrame implements ActionListener {
         }
         if (playerXScore>playerOScore){
             resultTextArea.append("Player X has the maximum points!\n");
+
+        }else if (playerXScore<playerOScore){
+            resultTextArea.append("Player O has the maximum points!\n");
+        } else{
+            resultTextArea.append ("Both players have the same points!\n");
         }
 
 

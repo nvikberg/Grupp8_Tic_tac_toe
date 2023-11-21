@@ -26,6 +26,7 @@ class Game implements ActionListener {
         startSlump();
         layoutCenter();
         addPlayer();
+        score();
         layoutTop();
         frame.setVisible(true);
     }
@@ -34,8 +35,6 @@ class Game implements ActionListener {
         scoreBoard.put(players.getFirst(),0);
         scoreBoard.put(players.getLast(),0);
     }
-
-    //Karl
     void layoutCenter(){
         panelKnappar = new JPanel();
         panelKnappar.setLayout(new GridLayout(3,3,1,1));
@@ -92,7 +91,6 @@ class Game implements ActionListener {
             }
         }
     }
-    //Karl
     void check(){
         int[][] vinstAlternativ = {{0,1,2},{3,4,5},{6,7,8},  //Vågrät vinst.
                 {0,3,6},{1,4,7},{2,5,8},                    //Lodrät vinst.
@@ -112,11 +110,9 @@ class Game implements ActionListener {
             }
         }
     }
-    //Karl
     void startSlump(){
         spelare= random.nextInt(2) == 0;                    //Slumpar 0-1 och avgör om boolen ska bli false eller true (Splare1 / Spelare2)
     }
-    //Karl
     void restartPanel(String vinnare){
         int val = JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?",vinnare+" är vinnaren!!",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,0);
         scoreBoard.put(vinnare,+1);
@@ -128,10 +124,9 @@ class Game implements ActionListener {
         if(JOptionPane.NO_OPTION==val){
             int player1Score = scoreBoard.get(players.getFirst());
             int player2Score = scoreBoard.get(players.getLast());
-            int close = JOptionPane.showOptionDialog(null,players.getFirst()+player1Score+": poäng! \n" +players.getLast()+player2Score+": poäng!","Scoreboard",JOptionPane.CLOSED_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,0);
-
-            if(close == JOptionPane.CLOSED_OPTION)
-             System.exit(0);                                 //Stänger programmet.
+            String message = players.getFirst()+":"+player1Score+" poäng!\n"+players.getLast()+":"+player2Score+" poäng!";
+            JOptionPane.showMessageDialog(null,message);
+            System.exit(0);                                     //Stänger programmet.
         }
     }
    public void addPlayer(){                                     //Fråga efter namn på spelarna. TODO Designa fönstert

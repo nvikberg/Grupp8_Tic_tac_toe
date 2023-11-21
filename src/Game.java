@@ -30,14 +30,13 @@ class Game implements ActionListener {
 
         //Metod för toppanel.
 
-        layoutCenter();
-        //layoutCenter2();
-        for(int i = 0; i < 2; i++){
-            addPlayer(i);
-        }
-        for(Player player: players){
-            System.out.println(player.getName());
-        }
+        //layoutCenter();
+
+        //To open a more working version uncomment row 33 and comment the next 3 rows.
+        layoutCenter2();
+        addPlayers();
+        assignTurnOrder();
+
         frame.setVisible(true);
     }
     //Karl
@@ -69,7 +68,8 @@ class Game implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        String playedButton = buttons.getActionCommand();
+        //System.out.println(e.getSource()==buttons[playedButton]);
         for(int i = 0; i < 9; i++){
             if(e.getSource()==knappar[i]){      //Kollar källan mot Arrayn av knappar.
                 if(spelare){
@@ -132,13 +132,32 @@ class Game implements ActionListener {
             System.exit(0);            //Stänger programmet.
     }
 
+    //Show the window to ask for the player's names. TODO Can be designed
    public void addPlayer(int numberOfPlayer){
         // Create an object of class player. We will need 2 players in a Multiplayer game.
         // They will have their own symbol based on a randomized funtion to assign it.
         String message = "Player "+ (numberOfPlayer + 1) + " name";
         String name = JOptionPane.showInputDialog(message);
         players.add(new Player(name));
-
-       //TODO Add player's turn
     }
+
+    // hardcoded amount of players.
+    public void addPlayers(){
+        for(int i = 0; i < 2; i++){
+            addPlayer(i);
+        }
+    }
+
+    // set a player order. Works for hardcoded 2 players.
+    public void assignTurnOrder(){
+        int decideFirst = random.nextInt(1, 101);
+        if(decideFirst % 2 == 0){
+            players.get(0).setPlayerOrder(1);
+            players.get(1).setPlayerOrder(2);
+        } else {
+            players.get(0).setPlayerOrder(2);
+            players.get(1).setPlayerOrder(1);
+        }
+    }
+
 }

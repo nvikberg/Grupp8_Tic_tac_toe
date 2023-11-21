@@ -1,7 +1,8 @@
 public class Player {
 
     private String name;
-    private int playerOrder;
+    private int playerOrder = 0;
+    String[] playedPositions;
     private int wonRounds = 0;  // if the same players keep on playing
                                 // we can display at te end how many rounds each player have won
 
@@ -9,8 +10,8 @@ public class Player {
         this.name = name;
     }
 
-    public void makeChoice(){
-
+    public void makeChoice(String buttonID){
+        //playedPositions.
     }
 
     public String getName() {

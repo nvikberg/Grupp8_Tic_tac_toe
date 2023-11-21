@@ -34,12 +34,13 @@ public class Game3 extends JFrame implements ActionListener {
 
         JPanel gamePanel = new JPanel(new GridLayout(3, 3));
         buttons = new JButton[3][3];
-        playerXturn = random.nextInt() < 0.5;
+        playerXturn = random.nextInt() < 0.5; // random boolean value where there's a 50% chance of it being true
         turnCount = 0;
         playerXScore = 0;
         playerOScore = 0;
 
         initializeButtons(gamePanel); //method call to create game buttons in game panel
+
 
         scoreLabel = new JLabel("Player X: " + playerXScore + "  Player O: " + playerOScore);
         scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -87,7 +88,7 @@ public class Game3 extends JFrame implements ActionListener {
             }
         }
     }
-    //check win
+    // en method for check winner
 
     private boolean checkWin(String symbol) {
         for (int i = 0; i < 3; i++) {
@@ -138,6 +139,7 @@ public class Game3 extends JFrame implements ActionListener {
                 resetGame();
             } else {
                 turnCount++;
+                // if every player gets same points then it will be draw
                 if (turnCount == 9) {
                     JOptionPane.showMessageDialog(this, "It's a draw!");
                     resultTextArea.append("It's a draw!\n");

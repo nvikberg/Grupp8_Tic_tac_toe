@@ -28,6 +28,7 @@ class Game implements ActionListener {
         addPlayer();
         score();
         layoutTop();
+        layoutBottom();
         frame.setVisible(true);
     }
     void score(){
@@ -45,6 +46,24 @@ class Game implements ActionListener {
             knappar[i].setFocusable(false);
             panelKnappar.add(knappar[i]);
         }
+    }
+    void layoutBottom(){
+        JPanel bottom = new JPanel();
+        bottom.setLayout(new FlowLayout());
+        JButton reset = new JButton("Restart!");
+        reset.setFocusable(false);
+        reset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for(int i = 0; i < 9; i++){
+                    knappar[i].setText("");
+                    startSlump();
+                    layoutTop();
+                }
+            }
+        });
+        bottom.add(reset);
+        frame.add(bottom,BorderLayout.SOUTH);
     }
     void layoutTop(){
         String name;

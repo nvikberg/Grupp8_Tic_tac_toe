@@ -13,8 +13,6 @@ class Game implements ActionListener {
     JButton[] knappar;
     boolean spelare;
     private ArrayList<Player> players = new ArrayList<Player>();
-    private ArrayList<String> winConditions = new ArrayList<>();
-
     Game(){
         frame = new JFrame();
         frame.setSize(500,500);

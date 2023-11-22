@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
+import javax.swing.UIManager;
 
 public class Game3 extends JFrame implements ActionListener {
 
@@ -21,6 +22,24 @@ public class Game3 extends JFrame implements ActionListener {
     private JScrollPane scrollPane;
 
     public Game3() {
+        //adding UI manager "Look and Feel design Nimbus to the game /nv
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+                    break;
+                }
+            }
+        } catch (Exception e) {
+        }
+        //key theme inputs for nimbus with a color change /nv
+        UIManager.put("nimbusBase", new Color(0,83,153));      // Base color
+        UIManager.put("nimbusBlueGrey", new Color(238,78,52));  // BlueGrey
+        UIManager.put("control", new Color( 50,90,130));
+        UIManager.put("text", new Color( 255,255,255));
+        UIManager.put("TextArea.background", new Color(0,0,0));
+
+
         setTitle("Tic Tac Toe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 600);

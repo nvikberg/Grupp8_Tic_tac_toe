@@ -51,10 +51,9 @@ class Game implements ActionListener {
         bottom.setLayout(new FlowLayout());                 //Sätter en panel i botten av framen.
         JButton reset = new JButton("Restart!");            //Skapar en knapp för att kunna 0 ställa spelplanen.
         reset.setFocusable(false);                          //Tarbort focusen från knapparna.
-        //Skapar en anonym AL som ska funka specifikt för den knappen.
-        reset.addActionListener(e -> {                   //Använder ett lambda uttryck för att minska koden.
-            for(int i = 0; i < buttons.length; i++){                 //0ar alla knappar.
-                buttons[i].setText("");
+        reset.addActionListener(e -> {                   //Skapar en anonym AL som ska funka specifikt för den knappen.
+            for(int i = 0; i < buttons.length; i++){                 //Använder ett lambda uttryck för att minska koden.
+                buttons[i].setText("");                             //0ar alla knappar.
                 startRandom();
                 layoutTop();
 
@@ -74,6 +73,7 @@ class Game implements ActionListener {
         JPanel top = new JPanel();
         top.setLayout(new FlowLayout());            //Sätter flowlayout mest för att det ser snyggare ut om det är centrerat.
         JLabel turn = new JLabel(name);             //Sätter JLabelns namn till rätt persons tur.
+        //Fonts, Design
         top.add(turn);
         frame.add(top,BorderLayout.NORTH);          //Lägger ny panel i NORTH på framen.
         top.revalidate();                           //Revalidatar och repaintar panelen varjegång metoden kallas så att texten updateras.
@@ -85,9 +85,8 @@ class Game implements ActionListener {
             if(e.getSource()==buttons[i]){                  //Kollar källan mot Arrayn av knappar.
                 if(player){
                     if(buttons[i].getText().isEmpty()){
-
-                                                            //Fonts Etc
-                                                            //Designa knappen efter att spelaren har tryckt på den.
+                        //Fonts Etc
+                        //Designa knappen efter att spelaren har tryckt på den.
                         buttons[i].setText("X");
                         player=false;
                         layoutTop();                        //Bytar mellan spelarna genom att sätta på och av boolen spelare.
@@ -100,9 +99,8 @@ class Game implements ActionListener {
                 }
                 else{
                     if(buttons[i].getText().isEmpty()){
-
-                                                            //Fonts etc
-                                                            //Designa knappen efter att spelare har tryckt på den.
+                        //Fonts etc
+                        //Designa knappen efter att spelare har tryckt på den.
                         buttons[i].setText("O");
                         player=true;
                         layoutTop();

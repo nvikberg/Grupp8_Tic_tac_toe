@@ -171,6 +171,7 @@ public class Game3 extends JFrame implements ActionListener {
             restartButton.setEnabled(true);
             return;
         }
+
         //Action when the restart button is clicked
         if (clickedButton == restartButton) {
             playerXScore = 0;
@@ -190,7 +191,7 @@ public class Game3 extends JFrame implements ActionListener {
             currentPlayer.setText("");
             return;
         }
-        if (!clickedButton.getText().equals("")) {
+        if (!clickedButton.getText().isEmpty()) {
             return;
         }
         //Action for  playerX turn
@@ -198,11 +199,7 @@ public class Game3 extends JFrame implements ActionListener {
         if (playerXturn) {
             try {
                 addClickSound();
-            } catch (UnsupportedAudioFileException ex) {
-                throw new RuntimeException(ex);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            } catch (LineUnavailableException ex) {
+            } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
                 throw new RuntimeException(ex);
             }
             clickedButton.setText("X");
@@ -212,11 +209,7 @@ public class Game3 extends JFrame implements ActionListener {
             if (checkWin("X")) {
                 try {
                     addWinSound();
-                } catch (UnsupportedAudioFileException ex) {
-                    throw new RuntimeException(ex);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                } catch (LineUnavailableException ex) {
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 JOptionPane.showMessageDialog(this, playerXField.getText()+" wins!");
@@ -226,6 +219,7 @@ public class Game3 extends JFrame implements ActionListener {
                 resultTextArea.append(playerXField.getText()+ " wins!\n");
                 checkmaximumScore();
                 resetGame();
+                playerXturn = false;
 
 
             } else {
@@ -235,6 +229,7 @@ public class Game3 extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(this, "It's a draw!");
                     resultTextArea.append("It's a draw!\n");
                     resetGame();
+                    playerXturn = false;
 
 
                 } else {
@@ -246,11 +241,7 @@ public class Game3 extends JFrame implements ActionListener {
         } else {
             try {
                 addClickSound();
-            } catch (UnsupportedAudioFileException ex) {
-                throw new RuntimeException(ex);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            } catch (LineUnavailableException ex) {
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
                 throw new RuntimeException(ex);
             }
             currentPlayer.setText(""+playerOField.getText()+" turn!");
@@ -261,11 +252,7 @@ public class Game3 extends JFrame implements ActionListener {
                 try {
                     addWinSound();
 
-                } catch (UnsupportedAudioFileException ex) {
-                    throw new RuntimeException(ex);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                } catch (LineUnavailableException ex) {
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
                     throw new RuntimeException(ex);
                 }
                 JOptionPane.showMessageDialog(this, playerOField.getText()+" wins!");
@@ -275,6 +262,7 @@ public class Game3 extends JFrame implements ActionListener {
                 resultTextArea.append(playerOField.getText()+  " wins!\n");
                 checkmaximumScore();
                 resetGame();
+                playerXturn =true;
 
             } else {
                 turnCount++;
@@ -283,15 +271,15 @@ public class Game3 extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(this, "It's a draw!");
                     resultTextArea.append("It's a draw!\n");
                     resetGame();
+                    playerXturn =true;
 
                 } else {
                     playerXturn =true;
-
                 }
             }
         }
     }
-    // to check maximumScore and add it result textarea 
+    // to check maximumScore and add it result textarea
     public void checkmaximumScore(){
         if (playerXScore > playerOScore) {
             resultTextArea.append( playerXField.getText() + " is the current leader!\n");
@@ -304,20 +292,17 @@ public class Game3 extends JFrame implements ActionListener {
     }
     //a method for add click game button sound
     public void addClickSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        File file = new File("Pen Clicking (online-audio-converter.com).wav");
-        AudioInputStream clickAudio = AudioSystem.getAudioInputStream(file);
+        AudioInputStream clickAudio = AudioSystem.getAudioInputStream(new File("Pen Clicking (online-audio-converter.com).wav"));
         clip = AudioSystem.getClip();
         clip.open(clickAudio);
         clip.start();
     }
     // a method for add win sound
     public void addWinSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        File file = new File("Winner.wav");
-        AudioInputStream winSound = AudioSystem.getAudioInputStream(file);
+        AudioInputStream winSound = AudioSystem.getAudioInputStream(new File("Winner.wav"));
         clip = AudioSystem.getClip();
         clip.open(winSound);
         clip.start();
-
     }
 
 }

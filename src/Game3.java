@@ -10,15 +10,11 @@ import java.util.Random;
 public class Game3 extends JFrame implements ActionListener {
     private JButton[][] buttons; //two dimensional array for row and column game buttons
     private boolean playerXturn;
-    private int turnCount;
-    private JTextField playerXField;
-    private JTextField playerOField;
-    private int playerXScore;
-    private int playerOScore;
+    private int turnCount, playerXScore, playerOScore;
+    private JTextField playerXField, playerOField, currentPlayer;
     private JLabel scoreLabel;
     Random random = new Random();
-    private JButton startButton;
-    private JButton restartButton;
+    private JButton startButton, restartButton;
     private JTextArea resultTextArea;
     private JScrollPane scrollPane;
     Clip clip;
@@ -30,7 +26,7 @@ public class Game3 extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
 
         //player panel for start player name and start game
-        JPanel playerPanel = new JPanel(new GridLayout(3, 2));
+        JPanel playerPanel = new JPanel(new GridLayout(4, 2));
         JLabel playerXLabel = new JLabel("Player Name:");
         playerXLabel.setHorizontalAlignment(SwingConstants.CENTER);
         playerXField = new JTextField();
@@ -49,8 +45,11 @@ public class Game3 extends JFrame implements ActionListener {
         startButton = new JButton("Start Game");
         startButton.setHorizontalAlignment(SwingConstants.CENTER);
         startButton.addActionListener(this);
-        playerPanel.add(startButton);
+        playerPanel.add(startButton, 4);
+        playerPanel.add(new JSeparator(SwingConstants.VERTICAL));
 
+        currentPlayer = new JTextField();
+        playerPanel.add(currentPlayer );
         //Game panel for game board
 
         JPanel gamePanel = new JPanel(new GridLayout(3, 3));
@@ -112,37 +111,48 @@ public class Game3 extends JFrame implements ActionListener {
             for (int j = 0; j < 3; j++) {
                 buttons[i][j].setText("");
                 buttons[i][j].setEnabled(true);
-
             }
+        }
+        if(playerXturn == true){
+            currentPlayer.setText(""+playerXField.getText()+" turn!");
+        } else {
+            currentPlayer.setText(""+playerOField.getText()+" turn!");
         }
     }
     // en method for check winner
 
     private boolean checkWin(String symbol) {
+        boolean isWinner = false;
         for (int i = 0; i < 3; i++) {
             if (buttons[i][0].getText().equals(symbol) && buttons[i][1].getText().equals(symbol) && buttons[i][2].getText().equals(symbol)) {
-                return true;
+                isWinner = true;
             }
             if (buttons[0][i].getText().equals(symbol) && buttons[1][i].getText().equals(symbol) && buttons[2][i].getText().equals(symbol)) {
-                return true;
+                isWinner = true;
             }
 
         }
         if (buttons[0][0].getText().equals(symbol) && buttons[1][1].getText().equals(symbol) && buttons[2][2].getText().equals(symbol)) {
-            return true;
+            isWinner = true;
         }
 
         if (buttons[0][2].getText().equals(symbol) && buttons[1][1].getText().equals(symbol) && buttons[2][0].getText().equals(symbol)) {
-            return true;
+            isWinner = true;
         }
-        return false;
+        if(isWinner == false){
+            if(symbol.equals("X")){
+                currentPlayer.setText(""+playerOField.getText()+" turn!");
+            } else {
+                currentPlayer.setText(""+playerXField.getText()+" turn!");
+            }
+        }
+        return isWinner;
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clickedButton = (JButton) e.getSource();
-
         //Action when the start button is clicked
         if (clickedButton == startButton) {
             startButton.setEnabled(false);
@@ -151,6 +161,11 @@ public class Game3 extends JFrame implements ActionListener {
             resetGame();
             playerXScore = 0;
             playerOScore = 0;
+            if(playerXturn == true){
+                currentPlayer.setText(""+playerXField.getText()+" turn!");
+            } else {
+                currentPlayer.setText(""+playerOField.getText()+" turn!");
+            }
             scoreLabel.setText(playerXField.getText()+": " + playerXScore + " " +playerOField.getText()+": "+ playerOScore);
             resultTextArea.setText("");
             restartButton.setEnabled(true);
@@ -172,6 +187,7 @@ public class Game3 extends JFrame implements ActionListener {
             }
             restartButton.setEnabled(false);
             startButton.setEnabled(true);
+            currentPlayer.setText("");
             return;
         }
         if (!clickedButton.getText().equals("")) {
@@ -189,7 +205,6 @@ public class Game3 extends JFrame implements ActionListener {
             } catch (LineUnavailableException ex) {
                 throw new RuntimeException(ex);
             }
-
             clickedButton.setText("X");
 
             // call checkwin method to check PlayerX is winner or not
@@ -238,6 +253,7 @@ public class Game3 extends JFrame implements ActionListener {
             } catch (LineUnavailableException ex) {
                 throw new RuntimeException(ex);
             }
+            currentPlayer.setText(""+playerOField.getText()+" turn!");
             clickedButton.setText("O");
             // call checkwin method to check PlayerO is winner or not
 

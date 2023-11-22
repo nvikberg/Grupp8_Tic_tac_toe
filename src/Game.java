@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import javax.swing.UIManager;
 
 class Game implements ActionListener {
 
@@ -17,22 +16,6 @@ class Game implements ActionListener {
     final ArrayList<String> players = new ArrayList<>();
     HashMap<String,Integer> scoreBoard = new HashMap<>();
     Game(){
-
-        //adding UI manager "Look and Feel design Nimbus to the game /nv
-        try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-                    break;
-                }
-            }
-        } catch (Exception e) {
-        }
-        //key theme inputs for nimbus with a color change /nv
-        UIManager.put("nimbusBase", new Color(58, 107, 53));
-        UIManager.put("nimbusBlueGrey", new Color(203,209, 143));
-        UIManager.put("control", new Color(227, 180, 72));
-
         frame = new JFrame();
         frame.setSize(500,500);
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);

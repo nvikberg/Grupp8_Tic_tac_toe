@@ -1,7 +1,10 @@
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 public class Game3 extends JFrame implements ActionListener {
@@ -55,7 +58,7 @@ public class Game3 extends JFrame implements ActionListener {
         initializeButtons(gamePanel); //method call to create game buttons in game panel
 
 
-        scoreLabel = new JLabel("Player  "+playerXField.getText()+":" + playerXScore + "  Player " +playerOField.getText()+": "+ playerOScore);
+        scoreLabel = new JLabel(playerXField.getText()+" : " + playerXScore + " " +playerOField.getText()+": "+ playerOScore);
         scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         restartButton = new JButton("Play Again");
@@ -138,7 +141,7 @@ public class Game3 extends JFrame implements ActionListener {
             resetGame();
             playerXScore = 0;
             playerOScore = 0;
-            scoreLabel.setText("Player  "+playerXField.getText()+":" + playerXScore + "  Player " +playerOField.getText()+": "+ playerOScore);
+            scoreLabel.setText(playerXField.getText()+": " + playerXScore + " " +playerOField.getText()+": "+ playerOScore);
             resultTextArea.setText("");
             restartButton.setEnabled(true);
             return;
@@ -146,7 +149,7 @@ public class Game3 extends JFrame implements ActionListener {
         if (clickedButton == restartButton) {
             playerXScore = 0;
             playerOScore = 0;
-            scoreLabel.setText("Player  "+playerXField.getText()+":" + playerXScore + "  Player " +playerOField.getText()+": "+ playerOScore);
+            scoreLabel.setText(playerXField.getText()+": " + playerXScore +" "+ playerOField.getText()+": "+ playerOScore);
 
             resultTextArea.setText("");
 
@@ -170,10 +173,10 @@ public class Game3 extends JFrame implements ActionListener {
             //clickedButton.setEnabled(false);
 
             if (checkWin("X")) {
-                JOptionPane.showMessageDialog(this, "Player "+ playerXField.getText()+" wins!");
+                JOptionPane.showMessageDialog(this, playerXField.getText()+" wins!");
                 playerXScore++;
-                scoreLabel.setText("Player  "+playerXField.getText()+":" + playerXScore + "  Player " +playerOField.getText()+": "+ playerOScore);
-                resultTextArea.append("Player "+playerXField.getText()+ ": "+ "wins!\n");
+                scoreLabel.setText(playerXField.getText()+": " + playerXScore+" " +playerOField.getText()+": "+ playerOScore);
+                resultTextArea.append(playerXField.getText()+ " wins!\n");
 
 
             } else {
@@ -194,10 +197,10 @@ public class Game3 extends JFrame implements ActionListener {
             clickedButton.setText("O");
             //clickedButton.setEnabled(false);
             if (checkWin("O")) {
-                JOptionPane.showMessageDialog(this, "Player "+ playerOField.getText()+" wins!");
+                JOptionPane.showMessageDialog(this, playerOField.getText()+" wins!");
                 playerOScore++;
-                scoreLabel.setText("Player  "+playerXField.getText()+":" + playerXScore + "  Player " +playerOField.getText()+": "+ playerOScore);
-                resultTextArea.append("Player "+playerOField.getText()+ ": "+ "wins!\n");
+                scoreLabel.setText(playerXField.getText()+ ": " + playerXScore+" " +playerOField.getText()+": "+ playerOScore);
+                resultTextArea.append(playerOField.getText()+  " wins!\n");
 
 
             } else {
@@ -213,6 +216,5 @@ public class Game3 extends JFrame implements ActionListener {
                 }
             }
         }
-
     }
 }

@@ -3,5 +3,6 @@ public class Main {
         Game game = new Game();
         //Game2 game2 = new Game2();
         //Game3 game3 = new Game3();
+       Game3 game3 = new Game3();
     }
 }

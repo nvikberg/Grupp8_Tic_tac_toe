@@ -26,6 +26,8 @@ public class Game3 extends JFrame implements ActionListener {
     private JTextArea resultTextArea;
     private JScrollPane scrollPane;
 
+    Clip clip;
+
     public Game3() {
         setTitle("Tic Tac Toe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -169,11 +171,33 @@ public class Game3 extends JFrame implements ActionListener {
         }
 
         if (playerXturn) {
+            try {
+                addClickSound();
+            } catch (UnsupportedAudioFileException ex) {
+                throw new RuntimeException(ex);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (LineUnavailableException ex) {
+                throw new RuntimeException(ex);
+            }
+
             clickedButton.setText("X");
             //clickedButton.setEnabled(false);
 
             if (checkWin("X")) {
+                try {
+                    addWinSound();
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                }
                 JOptionPane.showMessageDialog(this, playerXField.getText()+" wins!");
+                clip.stop();
+
+
                 playerXScore++;
                 scoreLabel.setText(playerXField.getText()+": " + playerXScore+" " +playerOField.getText()+": "+ playerOScore);
                 resultTextArea.append(playerXField.getText()+ " wins!\n");
@@ -194,10 +218,31 @@ public class Game3 extends JFrame implements ActionListener {
             }
 
         } else {
+            try {
+                addClickSound();
+            } catch (UnsupportedAudioFileException ex) {
+                throw new RuntimeException(ex);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (LineUnavailableException ex) {
+                throw new RuntimeException(ex);
+            }
             clickedButton.setText("O");
             //clickedButton.setEnabled(false);
             if (checkWin("O")) {
+                try {
+                    addWinSound();
+
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                }
                 JOptionPane.showMessageDialog(this, playerOField.getText()+" wins!");
+                clip.stop();
+
                 playerOScore++;
                 scoreLabel.setText(playerXField.getText()+ ": " + playerXScore+" " +playerOField.getText()+": "+ playerOScore);
                 resultTextArea.append(playerOField.getText()+  " wins!\n");
@@ -217,4 +262,20 @@ public class Game3 extends JFrame implements ActionListener {
             }
         }
     }
+    public void addClickSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        File file = new File("Pen Clicking (online-audio-converter.com).wav");
+        AudioInputStream clickAudio = AudioSystem.getAudioInputStream(file);
+         clip = AudioSystem.getClip();
+        clip.open(clickAudio);
+        clip.start();
+    }
+    public void addWinSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        File file = new File("VictorySong.wav");
+        AudioInputStream winSound = AudioSystem.getAudioInputStream(file);
+         clip = AudioSystem.getClip();
+        clip.open(winSound);
+        clip.start();
+
+    }
+
 }

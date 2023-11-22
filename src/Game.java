@@ -149,16 +149,6 @@ class Game implements ActionListener {
            String name = JOptionPane.showInputDialog(message);   // They will have their own symbol based on a randomized funtion to assign it.
            players.add(name);
        }
-   }
-    void playSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        /*Throw hanterar exceptions innom metoden. Kan ses som en ersättning för ett try/catch block.
-        UnsupportedAudioFileException i detta fallet hanterar den ljudfiler som inte stöds, IOExceptions hanterar läsning/öppning och stängning av filen.
-        LineUnavailableException hanterar eventuella fel på linjen/tråden som det körs på. Alla dom här exceptionsen behövs och det går inte att köra programmet utan dom.
-         */
-        AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File("VictorySong.wav"));
-        sound = AudioSystem.getClip();                       //Ger sound möjligheten att hantera olika ljud kommandon.
-        sound.open(audioStream);
-        sound.start();
     }
 }
 /*

@@ -68,7 +68,7 @@ public class Game3 extends JFrame implements ActionListener {
         scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         // If players want to play a new game
-        restartButton = new JButton("Start Again");
+        restartButton = new JButton("RESET GAME");
         restartButton.addActionListener(this);
 
         //to get final result
@@ -278,11 +278,11 @@ public class Game3 extends JFrame implements ActionListener {
     // to check maximumScore and add it result textarea 
     public void checkmaximumScore(){
         if (playerXScore > playerOScore) {
-            resultTextArea.append( playerXField.getText() + " has the maximum points!\n");
+            resultTextArea.append( playerXField.getText() + " is the current leader!\n");
         } else if (playerXScore < playerOScore) {
-            resultTextArea.append(playerOField.getText()  + " has the maximum points!\n");
+            resultTextArea.append(playerOField.getText()  + " is the current leader!\n");
         } else {
-            resultTextArea.append("Both players have the same points!\n");
+            resultTextArea.append("Equal score!\n");
         }
 
     }

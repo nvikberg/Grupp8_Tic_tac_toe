@@ -1,7 +1,10 @@
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -15,6 +18,7 @@ class Game implements ActionListener {
     boolean player;
     final ArrayList<String> players = new ArrayList<>();
     HashMap<String,Integer> scoreBoard = new HashMap<>();
+    Clip ljudClip;
     Game(){
         frame = new JFrame();
         frame.setSize(500,500);
@@ -87,7 +91,15 @@ class Game implements ActionListener {
                         buttons[i].setText("X");
                         player=false;
                         layoutTop();                        //Bytar mellan spelarna genom att sätta på och av boolen spelare.
-                        check();                            //Kollar efter varje knapp klick ifall det finns en vinnande kombination.
+                        try {
+                            check();                            //Kollar efter varje knapp klick ifall det finns en vinnande kombination.
+                        } catch (UnsupportedAudioFileException ex) {
+                            throw new RuntimeException(ex);
+                        } catch (LineUnavailableException ex) {
+                            throw new RuntimeException(ex);
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 }
                 else{
@@ -98,13 +110,21 @@ class Game implements ActionListener {
                         buttons[i].setText("O");
                         player=true;
                         layoutTop();
-                        check();
+                        try {
+                            check();
+                        } catch (UnsupportedAudioFileException ex) {
+                            throw new RuntimeException(ex);
+                        } catch (LineUnavailableException ex) {
+                            throw new RuntimeException(ex);
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 }
             }
         }
     }
-    void check(){
+    void check() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         int[][] winAlternativ = {{0,1,2},{3,4,5},{6,7,8},  //Vågrät vinst.
                 {0,3,6},{1,4,7},{2,5,8},                    //Lodrät vinst.
                 {0,4,8},{2,4,6}                             //Vinst på diagonalen.
@@ -126,13 +146,16 @@ class Game implements ActionListener {
     void startRandom(){
         player= random.nextInt(2) == 0;                    //Slumpar 0-1 och avgör om boolen ska bli false eller true (Splare1 / Spelare2)
     }
-    void rstPanel(String vinnare){
+    void rstPanel(String vinnare) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        playSound();
         int choice = JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?",vinnare+" är vinnaren!!",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,0);
         int score = scoreBoard.get(vinnare)+1;
         scoreBoard.put(vinnare,score);
         if(JOptionPane.YES_OPTION==choice) {                   //Tar int värdet från JOptionPane.YES_NO_OPTION som är 1 eller 0 och spara det i val.
             for (int i = 0; i < buttons.length; i++) {
                 buttons[i].setText("");                     //Metod som 0 sätter strängarna på knapparna så att man återigen kan klicka på dom.
+                ljudClip.stop();
+                ljudClip.close();
             }
         }
         if(JOptionPane.NO_OPTION==choice){
@@ -140,17 +163,28 @@ class Game implements ActionListener {
             int player2Score = scoreBoard.get(players.getLast());
             String message = players.getFirst()+":"+player1Score+" poäng!\n"+players.getLast()+":"+player2Score+" poäng!";
             JOptionPane.showMessageDialog(null,message);
+            ljudClip.stop();
+            ljudClip.close();
             System.exit(0);                                     //Stänger programmet.
         }
     }
-   public void addPlayer(){                                     //Fråga efter namn på spelarna.
-       for(int i= 1;i<3;i++){
-           String message = "Player "+ (i) + " name";            // Create an object of class player. We will need 2 players in a Multiplayer game.
+    void addPlayer() {                                     //Fråga efter namn på spelarna.
+       for (int i = 1; i < 3; i++) {
+           String message = "Player " + (i) + " name";            // Create an object of class player. We will need 2 players in a Multiplayer game.
            String name = JOptionPane.showInputDialog(message);   // They will have their own symbol based on a randomized funtion to assign it.
            players.add(name);
        }
+   }
+    void playSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        File win = new File("VictorySong.wav");
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(win);
+        ljudClip = AudioSystem.getClip();
+        ljudClip.open(audioStream); //0768964046
+
+        ljudClip.start();
     }
 }
+
 /*
 TODO
 Designa:

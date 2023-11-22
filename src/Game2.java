@@ -1,7 +1,10 @@
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -15,12 +18,7 @@ class Game2 implements ActionListener {
     private JButton button;
     private int buttonsClicked  = 0;
     private int gamesPlayed = 0;
-
-
     private ArrayList<Player> players = new ArrayList<Player>();
-
-
-
     private static HashMap<String, ArrayList<String>> winConditions = new HashMap<>();
 
 
@@ -62,6 +60,15 @@ class Game2 implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String playedButton = e.getActionCommand();
         String playerSign = currentPlayerChoice(playedButton);
+        try {
+            addClickSound();
+        } catch (UnsupportedAudioFileException ex) {
+            throw new RuntimeException(ex);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        } catch (LineUnavailableException ex) {
+            throw new RuntimeException(ex);
+        }
         for(JButton button : buttons){
             if(button.getActionCommand().equals(playedButton)) {
                 buttonsClicked++;
@@ -69,6 +76,7 @@ class Game2 implements ActionListener {
                 button.setEnabled(false);
                 if(buttonsClicked == 9 || doesCurrentPlayerWin()){
                     //TODO show dialog ask if the player wants the game to be restarted and then call restartGame();
+                    gamesPlayed++;
                     restartGame();
                 }
             }
@@ -195,5 +203,13 @@ class Game2 implements ActionListener {
     }
     public static HashMap<String, ArrayList<String>> getWinConditions() {
         return winConditions;
+    }
+
+    public void addClickSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        File file = new File("Pen Clicking (online-audio-converter.com).wav");
+        AudioInputStream clickAudio = AudioSystem.getAudioInputStream(file);
+        Clip clip = AudioSystem.getClip();
+        clip.open(clickAudio);
+        clip.start();
     }
 }

@@ -120,9 +120,9 @@ class Game implements ActionListener {
                 {0,4,8},{2,4,6}                             //Vinst på diagonalen.
         };
         for(int[] win: winAlternativ){                       //Går igenom arrayen övan med alla korrekta möjligheter för vinst med hjälp av en for each loop.
-            if(buttons[win[0]].getText().equals("X") &&        //Kollar dom vågräta alternativen.
-                    buttons[win[1]].getText().equals("X") &&   //Kollar dom lodräta alternativen.
-                    buttons[win[2]].getText().equals("X")){    //Kollar dom diagonala alternativen.
+            if(buttons[win[0]].getText().equals("X") &&        
+                    buttons[win[1]].getText().equals("X") &&
+                    buttons[win[2]].getText().equals("X")){
                 rstPanel(players.getFirst());                 //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
             }
             if(buttons[win[0]].getText().equals("O") &&

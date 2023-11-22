@@ -63,7 +63,7 @@ public class Game3 extends JFrame implements ActionListener {
         scoreLabel = new JLabel(playerXField.getText()+" : " + playerXScore + " " +playerOField.getText()+": "+ playerOScore);
         scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        restartButton = new JButton("Play Again");
+        restartButton = new JButton("Start Again");
         restartButton.addActionListener(this);
 
         resultTextArea = new JTextArea(5,20);
@@ -201,6 +201,8 @@ public class Game3 extends JFrame implements ActionListener {
                 playerXScore++;
                 scoreLabel.setText(playerXField.getText()+": " + playerXScore+" " +playerOField.getText()+": "+ playerOScore);
                 resultTextArea.append(playerXField.getText()+ " wins!\n");
+                checkmaximumScore();
+                resetGame();
 
 
             } else {
@@ -209,6 +211,7 @@ public class Game3 extends JFrame implements ActionListener {
                 if (turnCount == 9) {
                     JOptionPane.showMessageDialog(this, "It's a draw!");
                     resultTextArea.append("It's a draw!\n");
+                    resetGame();
 
 
                 } else {
@@ -246,6 +249,8 @@ public class Game3 extends JFrame implements ActionListener {
                 playerOScore++;
                 scoreLabel.setText(playerXField.getText()+ ": " + playerXScore+" " +playerOField.getText()+": "+ playerOScore);
                 resultTextArea.append(playerOField.getText()+  " wins!\n");
+                checkmaximumScore();
+                resetGame();
 
 
             } else {
@@ -253,6 +258,7 @@ public class Game3 extends JFrame implements ActionListener {
                 if (turnCount == 9) {
                     JOptionPane.showMessageDialog(this, "It's a draw!");
                     resultTextArea.append("It's a draw!\n");
+                    resetGame();
 
 
                 } else {
@@ -261,6 +267,16 @@ public class Game3 extends JFrame implements ActionListener {
                 }
             }
         }
+    }
+    public void checkmaximumScore(){
+        if (playerXScore > playerOScore) {
+            resultTextArea.append( playerXField.getText() + " has the maximum points!\n");
+        } else if (playerXScore < playerOScore) {
+            resultTextArea.append(playerOField.getText()  + " has the maximum points!\n");
+        } else {
+            resultTextArea.append("Both players have the same points!\n");
+        }
+
     }
     public void addClickSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         File file = new File("Pen Clicking (online-audio-converter.com).wav");

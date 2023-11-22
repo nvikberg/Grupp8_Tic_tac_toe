@@ -2,21 +2,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Player {
-
     private String name;
     private int playerOrder = 0;
     public String playerSign;
-
-
     private boolean isCurrent = false;
     private ArrayList<String> playedPositions = new ArrayList<String>();
     private HashMap<String, ArrayList<String>> winConditions = Game2.getWinConditions();
-
-
-
-    private int wonRounds = 0;  // if the same players keep on playing
-                                // we can display at te end how many rounds each player have won
-
+    private int wonRounds = 0;
     Player(String name){
         this.name = name;
     }

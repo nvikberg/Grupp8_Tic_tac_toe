@@ -265,14 +265,14 @@ public class Game3 extends JFrame implements ActionListener {
     public void addClickSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         File file = new File("Pen Clicking (online-audio-converter.com).wav");
         AudioInputStream clickAudio = AudioSystem.getAudioInputStream(file);
-         clip = AudioSystem.getClip();
+        clip = AudioSystem.getClip();
         clip.open(clickAudio);
         clip.start();
     }
     public void addWinSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        File file = new File("VictorySong.wav");
+        File file = new File("Winner.wav");
         AudioInputStream winSound = AudioSystem.getAudioInputStream(file);
-         clip = AudioSystem.getClip();
+        clip = AudioSystem.getClip();
         clip.open(winSound);
         clip.start();
 

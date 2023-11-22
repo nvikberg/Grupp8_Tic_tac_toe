@@ -18,7 +18,7 @@ class Game implements ActionListener {
     boolean player;
     final ArrayList<String> players = new ArrayList<>();
     HashMap<String,Integer> scoreBoard = new HashMap<>();
-    Clip ljudClip;
+    Clip sound;
     Game(){
         frame = new JFrame();
         frame.setSize(500,500);
@@ -144,8 +144,8 @@ class Game implements ActionListener {
         if(JOptionPane.YES_OPTION==choice) {                   //Tar int värdet från JOptionPane.YES_NO_OPTION som är 1 eller 0 och spara det i val.
             for (int i = 0; i < buttons.length; i++) {
                 buttons[i].setText("");                     //Metod som 0 sätter strängarna på knapparna så att man återigen kan klicka på dom.
-                ljudClip.stop();
-                ljudClip.close();
+                sound.stop();
+                sound.close();
             }
         }
         if(JOptionPane.NO_OPTION==choice){
@@ -153,8 +153,8 @@ class Game implements ActionListener {
             int player2Score = scoreBoard.get(players.getLast());
             String message = players.getFirst()+":"+player1Score+" poäng!\n"+players.getLast()+":"+player2Score+" poäng!";
             JOptionPane.showMessageDialog(null,message);
-            ljudClip.stop();
-            ljudClip.close();
+            sound.stop();
+            sound.close();
             System.exit(0);                                     //Stänger programmet.
         }
     }
@@ -167,14 +167,14 @@ class Game implements ActionListener {
    }
     void playSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         /*Throw hanterar exceptions innom metoden. Kan ses som en ersättning för ett try/catch block.
-         I detta fallet hanterar den ljudfiler som inte stöds, IOExceptions hanterar läsning och öppning och stängning av filen.
+        UnsupportedAudioFileException i detta fallet hanterar den ljudfiler som inte stöds, IOExceptions hanterar läsning/öppning och stängning av filen.
         LineUnavailableException hanterar eventuella fel på linjen/tråden som det körs på. Alla dom här exceptionsen behövs och det går inte att köra programmet utan dom.
          */
         File win = new File("VictorySong.wav");
         AudioInputStream audioStream = AudioSystem.getAudioInputStream(win);
-        ljudClip = AudioSystem.getClip();                       //Ger ljudClip möjligheten att hantera olika ljud kommandon.
-        ljudClip.open(audioStream);
-        ljudClip.start();
+        sound = AudioSystem.getClip();                       //Ger sound möjligheten att hantera olika ljud kommandon.
+        sound.open(audioStream);
+        sound.start();
     }
 }
 

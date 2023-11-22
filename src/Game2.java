@@ -77,11 +77,18 @@ class Game2 implements ActionListener {
                 if(buttonsClicked == 9 || doesCurrentPlayerWin()){
                     //TODO show dialog ask if the player wants the game to be restarted and then call restartGame();
                     gamesPlayed++;
-                    restartGame();
+                    int answer = JOptionPane.showConfirmDialog(null,
+                            "Do you want to play again?",
+                            "Continue playing",
+                            JOptionPane.YES_NO_OPTION);
+                    if(answer == 0) {
+                        restartGame();
+                    } else {
+                        System.exit(0);
+                    }
                 }
             }
         }
-
     }
 
 
@@ -107,12 +114,21 @@ class Game2 implements ActionListener {
         if(decideFirst % 2 == 0){
             players.get(0).setPlayerOrder(1);
             players.get(0).setCurrent(true);
+            JOptionPane.showMessageDialog(null,
+                    ""+players.get(0).getName() + " starts the game ",
+                    "First player",
+                    JOptionPane.PLAIN_MESSAGE);
             players.get(1).setPlayerOrder(2);
         } else {
             players.get(0).setPlayerOrder(2);
             players.get(1).setPlayerOrder(1);
             players.get(1).setCurrent(true);
+            JOptionPane.showMessageDialog(null,
+                    ""+players.get(1).getName() + " starts the game ",
+                    "First player",
+                    JOptionPane.PLAIN_MESSAGE);
         }
+
     }
 
     public String currentPlayerChoice(String playedButton){
@@ -124,6 +140,10 @@ class Game2 implements ActionListener {
                 players.get(1).setCurrent(true);
             } else {
                 players.get(0).setWonRounds();
+                JOptionPane.showMessageDialog(null,
+                        ""+players.get(0).getName() + " won. You have won "+ players.get(0).getWonRounds() + " rounds in total!",
+                        "Titel",
+                        JOptionPane.PLAIN_MESSAGE);
                 try {
                     addWinSound();
                 } catch (UnsupportedAudioFileException ex) {
@@ -143,6 +163,10 @@ class Game2 implements ActionListener {
                 players.get(0).setCurrent(true);
             } else {
                 players.get(1).setWonRounds();
+                JOptionPane.showMessageDialog(null,
+                        ""+players.get(1).getName() + " won. You have won "+ players.get(1).getWonRounds() + " rounds in total!",
+                        "Titel",
+                        JOptionPane.PLAIN_MESSAGE);
                 try {
                     addWinSound();
                 } catch (UnsupportedAudioFileException ex) {

@@ -24,7 +24,7 @@ class Game2 implements ActionListener {
 
     Game2(){
         frame = new JFrame();
-        frame.setSize(500,500);
+        frame.setBounds(580,200,500,500); //set bounds so game will show up in the middle of the screen/nv
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.setTitle("Tic Tac Toe");

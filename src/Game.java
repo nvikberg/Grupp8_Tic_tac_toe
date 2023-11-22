@@ -93,13 +93,9 @@ class Game implements ActionListener {
                         layoutTop();                        //Bytar mellan spelarna genom att sätta på och av boolen spelare.
                         try {
                             check();                            //Kollar efter varje knapp klick ifall det finns en vinnande kombination.
-                        } catch (UnsupportedAudioFileException ex) {
-                            throw new RuntimeException(ex);
-                        } catch (LineUnavailableException ex) {
-                            throw new RuntimeException(ex);
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
+                        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+                            throw new RuntimeException(ex);     //Gör samma som nedan i playSound metoden men funkade inte att lägga in en throw i AL så gör på det andra sättet istället.
+                        }                                       //Använder classen RuntimeException som innehållen exceptionsen övan för att minska koden.
                     }
                 }
                 else{
@@ -112,11 +108,7 @@ class Game implements ActionListener {
                         layoutTop();
                         try {
                             check();
-                        } catch (UnsupportedAudioFileException ex) {
-                            throw new RuntimeException(ex);
-                        } catch (LineUnavailableException ex) {
-                            throw new RuntimeException(ex);
-                        } catch (IOException ex) {
+                        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
                             throw new RuntimeException(ex);
                         }
                     }
@@ -176,11 +168,14 @@ class Game implements ActionListener {
        }
    }
     void playSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        /*Throw hanterar exceptions innom metoden. Kan ses som en ersättning för ett try/catch block.
+         I detta fallet hanterar den ljudfiler som inte stöds, IOExceptions hanterar läsning och öppning och stängning av filen.
+        LineUnavailableException hanterar eventuella fel på linjen/tråden som det körs på. Alla dom här exceptionsen behövs och det går inte att köra programmet utan dom.
+         */
         File win = new File("VictorySong.wav");
         AudioInputStream audioStream = AudioSystem.getAudioInputStream(win);
-        ljudClip = AudioSystem.getClip();
-        ljudClip.open(audioStream); 
-
+        ljudClip = AudioSystem.getClip();                       //Ger ljudClip möjligheten att hantera olika ljud kommandon.
+        ljudClip.open(audioStream);
         ljudClip.start();
     }
 }
@@ -189,5 +184,5 @@ class Game implements ActionListener {
 TODO
 Designa:
 Fönster,Knappar,JOptionPanes,
-Lägga till ljud för VG alternativt nytt GM.
+Lägga till nytt GM.
 */

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Player {
 
@@ -8,7 +9,11 @@ public class Player {
 
 
     private boolean isCurrent = false;
-    ArrayList<String> playedPositions = new ArrayList<String>();
+    private ArrayList<String> playedPositions = new ArrayList<String>();
+    private HashMap<String, ArrayList<String>> winConditions = Game2.getWinConditions();
+
+
+
     private int wonRounds = 0;  // if the same players keep on playing
                                 // we can display at te end how many rounds each player have won
 
@@ -32,9 +37,12 @@ public class Player {
         this.playerOrder = playerOrder;
         if(playerOrder==1){
             this.playerSign = "X";
+            this.isCurrent = true;
         } else {
             this.playerSign = "O";
+            this.isCurrent = false;
         }
+        this.playedPositions.clear();
     }
 
     public boolean isCurrent() {
@@ -45,4 +53,21 @@ public class Player {
         isCurrent = current;
     }
 
+    public boolean checkForWin(){
+        boolean wins = false;
+        for(String key : winConditions.keySet()){
+            if(playedPositions.containsAll(winConditions.get(key))){
+                wins = true;
+            }
+        }
+        return wins;
+    }
+
+    public int getWonRounds() {
+        return wonRounds;
+    }
+    public void setWonRounds() {
+        this.wonRounds++;
+        System.out.println(name +" won " + wonRounds);
+    }
 }

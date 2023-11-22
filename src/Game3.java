@@ -156,6 +156,7 @@ public class Game3 extends JFrame implements ActionListener {
             restartButton.setEnabled(true);
             return;
         }
+
         //Action when the restart button is clicked
         if (clickedButton == restartButton) {
             playerXScore = 0;
@@ -211,6 +212,7 @@ public class Game3 extends JFrame implements ActionListener {
                 resultTextArea.append(playerXField.getText()+ " wins!\n");
                 checkmaximumScore();
                 resetGame();
+                playerXturn = false;
 
 
             } else {
@@ -220,6 +222,7 @@ public class Game3 extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(this, "It's a draw!");
                     resultTextArea.append("It's a draw!\n");
                     resetGame();
+                    playerXturn = false;
 
 
                 } else {
@@ -259,6 +262,7 @@ public class Game3 extends JFrame implements ActionListener {
                 resultTextArea.append(playerOField.getText()+  " wins!\n");
                 checkmaximumScore();
                 resetGame();
+                playerXturn =true;
 
             } else {
                 turnCount++;
@@ -267,6 +271,7 @@ public class Game3 extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(this, "It's a draw!");
                     resultTextArea.append("It's a draw!\n");
                     resetGame();
+                    playerXturn =true;
 
                 } else {
                     playerXturn =true;
@@ -275,7 +280,7 @@ public class Game3 extends JFrame implements ActionListener {
             }
         }
     }
-    // to check maximumScore and add it result textarea 
+    // to check maximumScore and add it result textarea
     public void checkmaximumScore(){
         if (playerXScore > playerOScore) {
             resultTextArea.append( playerXField.getText() + " has the maximum points!\n");

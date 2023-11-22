@@ -11,6 +11,9 @@ public class Game3 extends JFrame implements ActionListener {
 
     private boolean playerXturn;
     private int turnCount;
+
+    private JTextField playerXField;
+    private JTextField playerOField;
     private int playerXScore;
     private int playerOScore;
     private JLabel scoreLabel;
@@ -26,11 +29,21 @@ public class Game3 extends JFrame implements ActionListener {
         setSize(500, 600);
         setLocationRelativeTo(null);
 
-        //button panel for start game
-        JPanel buttonPanel = new JPanel();
+        JPanel playerPanel = new JPanel(new GridLayout(3, 2));
+        JLabel playerXLabel = new JLabel("Player X Name:");
+        playerXField = new JTextField();
+        JLabel playerOLabel = new JLabel("Player O Name:");
+        playerOField = new JTextField();
+        playerPanel.add(playerXLabel);
+        playerPanel.add(playerXField);
+        playerPanel.add(playerOLabel);
+        playerPanel.add(playerOField);
+
+        //player panel for start game
+
         startButton = new JButton("Start Game");
         startButton.addActionListener(this);
-        buttonPanel.add(startButton);
+        playerPanel.add(startButton);
 
         JPanel gamePanel = new JPanel(new GridLayout(3, 3));
         buttons = new JButton[3][3];
@@ -42,7 +55,7 @@ public class Game3 extends JFrame implements ActionListener {
         initializeButtons(gamePanel); //method call to create game buttons in game panel
 
 
-        scoreLabel = new JLabel("Player X: " + playerXScore + "  Player O: " + playerOScore);
+        scoreLabel = new JLabel("Player  "+playerXField.getText()+":" + playerXScore + "  Player " +playerOField.getText()+": "+ playerOScore);
         scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         restartButton = new JButton("Play Again");
@@ -57,7 +70,7 @@ public class Game3 extends JFrame implements ActionListener {
         bottomPanel.add(restartButton, BorderLayout.CENTER);
         bottomPanel.add(scrollPane, BorderLayout.SOUTH);
 
-        add(buttonPanel, BorderLayout.NORTH);
+        add(playerPanel, BorderLayout.NORTH);
         add(gamePanel, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
         setVisible(true);
@@ -73,6 +86,8 @@ public class Game3 extends JFrame implements ActionListener {
                 buttons[i][j].setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
                 buttons[i][j].addActionListener(this);
                 gamePanel.add(buttons[i][j]);
+                buttons[i][j].setEnabled(false);
+
             }
         }
 
@@ -81,10 +96,12 @@ public class Game3 extends JFrame implements ActionListener {
     //reset game (create a new blank game panel)
     private void resetGame() {
         turnCount = 0;
-        playerXturn = random.nextInt() < 0.5;
+        playerXturn = random.nextInt() < 0.5;// random boolean value where there's a 50% chance of it being true
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 buttons[i][j].setText("");
+                buttons[i][j].setEnabled(true);
+
             }
         }
     }
@@ -117,66 +134,85 @@ public class Game3 extends JFrame implements ActionListener {
 
 
         if (clickedButton == startButton) {
+            startButton.setEnabled(false);
             resetGame();
+            playerXScore = 0;
+            playerOScore = 0;
+            scoreLabel.setText("Player  "+playerXField.getText()+":" + playerXScore + "  Player " +playerOField.getText()+": "+ playerOScore);
+            resultTextArea.setText("");
+            restartButton.setEnabled(true);
             return;
         }
         if (clickedButton == restartButton) {
             playerXScore = 0;
             playerOScore = 0;
-            scoreLabel.setText("Player X: " + playerXScore + " Player O: " + playerOScore);
+            scoreLabel.setText("Player  "+playerXField.getText()+":" + playerXScore + "  Player " +playerOField.getText()+": "+ playerOScore);
+
             resultTextArea.setText("");
-            resetGame();
+
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    buttons[i][j].setText("");
+                    buttons[i][j].setEnabled(false);
+                }
+            }
+            restartButton.setEnabled(false);
+            startButton.setEnabled(true);
+
+            return;
+        }
+        if (!clickedButton.getText().equals("")) {
             return;
         }
 
         if (playerXturn) {
             clickedButton.setText("X");
+            //clickedButton.setEnabled(false);
+
             if (checkWin("X")) {
-                JOptionPane.showMessageDialog(this, "Player X wins!");
+                JOptionPane.showMessageDialog(this, "Player "+ playerXField.getText()+" wins!");
                 playerXScore++;
-                scoreLabel.setText("Player X: " + playerXScore + " Player O: " + playerOScore);
-                resultTextArea.append("Player X wins!\n");
-                resetGame();
+                scoreLabel.setText("Player  "+playerXField.getText()+":" + playerXScore + "  Player " +playerOField.getText()+": "+ playerOScore);
+                resultTextArea.append("Player "+playerXField.getText()+ ": "+ "wins!\n");
+
+
             } else {
                 turnCount++;
                 // if every player gets same points then it will be draw
                 if (turnCount == 9) {
                     JOptionPane.showMessageDialog(this, "It's a draw!");
                     resultTextArea.append("It's a draw!\n");
-                    resetGame();
+
+
                 } else {
                     playerXturn = false;
+
                 }
             }
 
         } else {
             clickedButton.setText("O");
+            //clickedButton.setEnabled(false);
             if (checkWin("O")) {
-                JOptionPane.showMessageDialog(this, "Player O wins!");
+                JOptionPane.showMessageDialog(this, "Player "+ playerOField.getText()+" wins!");
                 playerOScore++;
-                scoreLabel.setText("Player X: " + playerXScore + " Player O: " + playerOScore);
-                resultTextArea.append("Player O wins!\n");
-                resetGame();
+                scoreLabel.setText("Player  "+playerXField.getText()+":" + playerXScore + "  Player " +playerOField.getText()+": "+ playerOScore);
+                resultTextArea.append("Player "+playerOField.getText()+ ": "+ "wins!\n");
+
+
             } else {
                 turnCount++;
                 if (turnCount == 9) {
                     JOptionPane.showMessageDialog(this, "It's a draw!");
                     resultTextArea.append("It's a draw!\n");
-                    resetGame();
+
+
                 } else {
                     playerXturn =true;
+
                 }
             }
         }
-        if (playerXScore>playerOScore){
-            resultTextArea.append("Player X has the maximum points!\n");
-
-        }else if (playerXScore<playerOScore){
-            resultTextArea.append("Player O has the maximum points!\n");
-        } else{
-            resultTextArea.append ("Both players have the same points!\n");
-        }
-
 
     }
 }

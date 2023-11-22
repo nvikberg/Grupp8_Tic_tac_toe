@@ -1,10 +1,7 @@
-import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -18,7 +15,6 @@ class Game implements ActionListener {
     boolean player;
     final ArrayList<String> players = new ArrayList<>();
     HashMap<String,Integer> scoreBoard = new HashMap<>();
-    Clip sound;
     Game(){
         frame = new JFrame();
         frame.setSize(500,500);
@@ -51,9 +47,10 @@ class Game implements ActionListener {
         bottom.setLayout(new FlowLayout());                 //Sätter en panel i botten av framen.
         JButton reset = new JButton("Restart!");            //Skapar en knapp för att kunna 0 ställa spelplanen.
         reset.setFocusable(false);                          //Tarbort focusen från knapparna.
-        reset.addActionListener(e -> {                   //Skapar en anonym AL som ska funka specifikt för den knappen.
-            for(int i = 0; i < buttons.length; i++){                 //Använder ett lambda uttryck för att minska koden.
-                buttons[i].setText("");                             //0ar alla knappar.
+        //Skapar en anonym AL som ska funka specifikt för den knappen.
+        reset.addActionListener(e -> {                   //Använder ett lambda uttryck för att minska koden.
+            for(int i = 0; i < buttons.length; i++){                 //0ar alla knappar.
+                buttons[i].setText("");
                 startRandom();
                 layoutTop();
 
@@ -73,7 +70,6 @@ class Game implements ActionListener {
         JPanel top = new JPanel();
         top.setLayout(new FlowLayout());            //Sätter flowlayout mest för att det ser snyggare ut om det är centrerat.
         JLabel turn = new JLabel(name);             //Sätter JLabelns namn till rätt persons tur.
-        //Fonts, Design
         top.add(turn);
         frame.add(top,BorderLayout.NORTH);          //Lägger ny panel i NORTH på framen.
         top.revalidate();                           //Revalidatar och repaintar panelen varjegång metoden kallas så att texten updateras.
@@ -85,44 +81,38 @@ class Game implements ActionListener {
             if(e.getSource()==buttons[i]){                  //Kollar källan mot Arrayn av knappar.
                 if(player){
                     if(buttons[i].getText().isEmpty()){
-                        //Fonts Etc
-                        //Designa knappen efter att spelaren har tryckt på den.
+
+                                                            //Fonts Etc
+                                                            //Designa knappen efter att spelaren har tryckt på den.
                         buttons[i].setText("X");
                         player=false;
                         layoutTop();                        //Bytar mellan spelarna genom att sätta på och av boolen spelare.
-                        try {
-                            check();                            //Kollar efter varje knapp klick ifall det finns en vinnande kombination.
-                        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
-                            throw new RuntimeException(ex);     //Gör samma som nedan i playSound metoden men funkade inte att lägga in en throw i AL så gör på det andra sättet istället.
-                        }                                       //Använder classen RuntimeException som innehållen exceptionsen övan för att minska koden.
+                        check();                            //Kollar efter varje knapp klick ifall det finns en vinnande kombination.
                     }
                 }
                 else{
                     if(buttons[i].getText().isEmpty()){
-                        //Fonts etc
-                        //Designa knappen efter att spelare har tryckt på den.
+
+                                                            //Fonts etc
+                                                            //Designa knappen efter att spelare har tryckt på den.
                         buttons[i].setText("O");
                         player=true;
                         layoutTop();
-                        try {
-                            check();
-                        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
+                        check();
                     }
                 }
             }
         }
     }
-    void check() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    void check(){
         int[][] winAlternativ = {{0,1,2},{3,4,5},{6,7,8},  //Vågrät vinst.
                 {0,3,6},{1,4,7},{2,5,8},                    //Lodrät vinst.
                 {0,4,8},{2,4,6}                             //Vinst på diagonalen.
         };
         for(int[] win: winAlternativ){                       //Går igenom arrayen övan med alla korrekta möjligheter för vinst med hjälp av en for each loop.
-            if(buttons[win[0]].getText().equals("X") &&        
-                    buttons[win[1]].getText().equals("X") &&
-                    buttons[win[2]].getText().equals("X")){
+            if(buttons[win[0]].getText().equals("X") &&        //Kollar dom vågräta alternativen.
+                    buttons[win[1]].getText().equals("X") &&   //Kollar dom lodräta alternativen.
+                    buttons[win[2]].getText().equals("X")){    //Kollar dom diagonala alternativen.
                 rstPanel(players.getFirst());                 //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
             }
             if(buttons[win[0]].getText().equals("O") &&
@@ -136,16 +126,13 @@ class Game implements ActionListener {
     void startRandom(){
         player= random.nextInt(2) == 0;                    //Slumpar 0-1 och avgör om boolen ska bli false eller true (Splare1 / Spelare2)
     }
-    void rstPanel(String vinnare) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        playSound();
+    void rstPanel(String vinnare){
         int choice = JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?",vinnare+" är vinnaren!!",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,0);
         int score = scoreBoard.get(vinnare)+1;
         scoreBoard.put(vinnare,score);
         if(JOptionPane.YES_OPTION==choice) {                   //Tar int värdet från JOptionPane.YES_NO_OPTION som är 1 eller 0 och spara det i val.
             for (int i = 0; i < buttons.length; i++) {
                 buttons[i].setText("");                     //Metod som 0 sätter strängarna på knapparna så att man återigen kan klicka på dom.
-                sound.stop();
-                sound.close();
             }
         }
         if(JOptionPane.NO_OPTION==choice){
@@ -153,34 +140,20 @@ class Game implements ActionListener {
             int player2Score = scoreBoard.get(players.getLast());
             String message = players.getFirst()+":"+player1Score+" poäng!\n"+players.getLast()+":"+player2Score+" poäng!";
             JOptionPane.showMessageDialog(null,message);
-            sound.stop();
-            sound.close();
             System.exit(0);                                     //Stänger programmet.
         }
     }
-    void addPlayer() {                                     //Fråga efter namn på spelarna.
-       for (int i = 1; i < 3; i++) {
-           String message = "Player " + (i) + " name";            // Create an object of class player. We will need 2 players in a Multiplayer game.
+   public void addPlayer(){                                     //Fråga efter namn på spelarna.
+       for(int i= 1;i<3;i++){
+           String message = "Player "+ (i) + " name";            // Create an object of class player. We will need 2 players in a Multiplayer game.
            String name = JOptionPane.showInputDialog(message);   // They will have their own symbol based on a randomized funtion to assign it.
            players.add(name);
        }
-   }
-    void playSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        /*Throw hanterar exceptions innom metoden. Kan ses som en ersättning för ett try/catch block.
-        UnsupportedAudioFileException i detta fallet hanterar den ljudfiler som inte stöds, IOExceptions hanterar läsning/öppning och stängning av filen.
-        LineUnavailableException hanterar eventuella fel på linjen/tråden som det körs på. Alla dom här exceptionsen behövs och det går inte att köra programmet utan dom.
-         */
-        File win = new File("VictorySong.wav");
-        AudioInputStream audioStream = AudioSystem.getAudioInputStream(win);
-        sound = AudioSystem.getClip();                       //Ger sound möjligheten att hantera olika ljud kommandon.
-        sound.open(audioStream);
-        sound.start();
     }
 }
-
 /*
 TODO
 Designa:
 Fönster,Knappar,JOptionPanes,
-Lägga till nytt GM.
+Lägga till ljud för VG alternativt nytt GM.
 */

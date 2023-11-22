@@ -124,6 +124,15 @@ class Game2 implements ActionListener {
                 players.get(1).setCurrent(true);
             } else {
                 players.get(0).setWonRounds();
+                try {
+                    addWinSound();
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
             return players.get(0).playerSign;
         } else {
@@ -134,6 +143,15 @@ class Game2 implements ActionListener {
                 players.get(0).setCurrent(true);
             } else {
                 players.get(1).setWonRounds();
+                try {
+                    addWinSound();
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
             return players.get(1).playerSign;
         }
@@ -210,6 +228,13 @@ class Game2 implements ActionListener {
         AudioInputStream clickAudio = AudioSystem.getAudioInputStream(file);
         Clip clip = AudioSystem.getClip();
         clip.open(clickAudio);
+        clip.start();
+    }
+    public void addWinSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        File file = new File("Slapping Three Faces.wav");
+        AudioInputStream winSound = AudioSystem.getAudioInputStream(file);
+        Clip clip = AudioSystem.getClip();
+        clip.open(winSound);
         clip.start();
     }
 }

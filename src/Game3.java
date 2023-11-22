@@ -34,10 +34,12 @@ public class Game3 extends JFrame implements ActionListener {
         JLabel playerXLabel = new JLabel("Player Name:");
         playerXLabel.setHorizontalAlignment(SwingConstants.CENTER);
         playerXField = new JTextField();
+        playerXField.setText("Player 1");
 
         JLabel playerOLabel = new JLabel("Player Name:");
         playerOLabel.setHorizontalAlignment(SwingConstants.CENTER);
         playerOField = new JTextField();
+        playerOField.setText("Player 2");
 
         playerPanel.add(playerXLabel);
         playerPanel.add(playerXField);
@@ -144,6 +146,8 @@ public class Game3 extends JFrame implements ActionListener {
         //Action when the start button is clicked
         if (clickedButton == startButton) {
             startButton.setEnabled(false);
+            playerXField.setEnabled(false);
+            playerOField.setEnabled(false);
             resetGame();
             playerXScore = 0;
             playerOScore = 0;
@@ -156,6 +160,8 @@ public class Game3 extends JFrame implements ActionListener {
         if (clickedButton == restartButton) {
             playerXScore = 0;
             playerOScore = 0;
+            playerXField.setEnabled(true);
+            playerOField.setEnabled(true);
             scoreLabel.setText(playerXField.getText()+": " + playerXScore +" "+ playerOField.getText()+": "+ playerOScore);
             resultTextArea.setText("");
             for (int i = 0; i < 3; i++) {

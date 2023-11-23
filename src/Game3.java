@@ -58,12 +58,13 @@ public class Game3 extends JFrame implements ActionListener {
         playerPanel.add(startButton);
         playerPanel.add(new JSeparator(SwingConstants.VERTICAL));
 
-        JLabel playersTurnLabel = new JLabel("Who's up  ");
+        JLabel playersTurnLabel = new JLabel();
         playersTurnLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         playerPanel.add(playersTurnLabel);
 
         //playerPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
         currentPlayer = new JLabel();
+        currentPlayer.setHorizontalAlignment(SwingConstants.CENTER);
         playerPanel.add(currentPlayer);
         playerPanel.add(new JSeparator(SwingConstants.VERTICAL));
 

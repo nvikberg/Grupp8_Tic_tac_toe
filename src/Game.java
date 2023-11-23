@@ -57,6 +57,7 @@ class Game implements ActionListener {
         reset.addActionListener(e -> {                   //Använder ett lambda uttryck för att minska koden.
             for(int i = 0; i < buttons.length; i++){                 //0ar alla knappar.
                 buttons[i].setText("");
+                playedTurns = 0;
                 startRandom();
                 layoutTop();
             }
@@ -82,17 +83,14 @@ class Game implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         for(int i = 0; i < buttons.length; i++){
             if(e.getSource()==buttons[i]){                  //Kollar källan mot Arrayn av knappar.
+                playedTurns++;
                 if(player){
                     if(buttons[i].getText().isEmpty()){
                         //Fonts Etc
                         buttons[i].setText("X");
                         player=false;
                         layoutTop();                            //Bytar mellan spelarna genom att sätta på och av boolen spelare.
-                        try {
-                            check();                            //Kollar efter varje knapp klick ifall det finns en vinnande kombination.
-                        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
+                        check();                            //Kollar efter varje knapp klick ifall det finns en vinnande kombination.
                     }
                 }
                 else{
@@ -101,17 +99,13 @@ class Game implements ActionListener {
                         buttons[i].setText("O");
                         player=true;
                         layoutTop();
-                        try {
-                            check();
-                        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
+                        check();
                     }
                 }
             }
         }
     }
-    void check() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    void check(){
         int[][] winAlternativ = {{0,1,2},{3,4,5},{6,7,8},  //Vågrät vinst.
                 {0,3,6},{1,4,7},{2,5,8},                    //Lodrät vinst.
                 {0,4,8},{2,4,6}                             //Vinst på diagonalen.
@@ -127,21 +121,36 @@ class Game implements ActionListener {
                     buttons[win[2]].getText().equals("O")){
                 rstPanel(players.getLast()); //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
             }
+            if(playedTurns == 9){
+                rstPanel("draw");
+            }
         }
     }
     void startRandom(){
         player= random.nextInt(2) == 0;                    //Slumpar 0-1 och avgör om boolen ska bli false eller true (Splare1 / Spelare2)
     }
-    void rstPanel(String vinnare) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        playSound();
-        int choice = JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?",vinnare+" är vinnaren!!",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,winnerImage,null,0);
-        int score = scoreBoard.get(vinnare)+1;
-        scoreBoard.put(vinnare,score);
+    void rstPanel(String vinnare){
+        int choice;
+        playedTurns = 0;
+        if(vinnare.equals("draw")){
+            choice = JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?","Ingen vinnare denna gång",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,winnerImage,null,0);
+        } else {
+            try{
+                playSound();
+            } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            choice = JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?",vinnare+" är vinnaren!!",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,winnerImage,null,0);
+            int score = scoreBoard.get(vinnare)+1;
+            scoreBoard.put(vinnare,score);
+        }
         if(JOptionPane.YES_OPTION==choice) {                   //Tar int värdet från JOptionPane.YES_NO_OPTION som är 1 eller 0 och spara det i val.
             for (int i = 0; i < buttons.length; i++) {
                 buttons[i].setText("");                     //Metod som 0 sätter strängarna på knapparna så att man återigen kan klicka på dom.
-                sound.stop();
-                sound.close();
+                if(!vinnare.equals("draw")){
+                    sound.stop();
+                    sound.close();
+                }
             }
         }
         if(JOptionPane.NO_OPTION==choice){
@@ -149,8 +158,6 @@ class Game implements ActionListener {
             int player2Score = scoreBoard.get(players.getLast());
             String message = players.getFirst()+":"+player1Score+" poäng!\n"+players.getLast()+":"+player2Score+" poäng!";
             JOptionPane.showMessageDialog(null,message,"Total score",JOptionPane.INFORMATION_MESSAGE,winnerImage); //adding title to dialog and icon/nv
-            sound.stop();
-            sound.close();
             System.exit(0);                                     //Stänger programmet.
         }
     }
@@ -179,7 +186,7 @@ class Game implements ActionListener {
         UnsupportedAudioFileException i detta fallet hanterar den ljudfiler som inte stöds, IOExceptions hanterar läsning/öppning och stängning av filen.
         LineUnavailableException hanterar eventuella fel på linjen/tråden som det körs på. Alla dom här exceptionsen behövs och det går inte att köra programmet utan dom.
          */
-        AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File("VictorySong.wav"));
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File("Winner.wav"));
         sound = AudioSystem.getClip();                       //Ger sound möjligheten att hantera olika ljud kommandon.
         sound.open(audioStream);
         sound.start();

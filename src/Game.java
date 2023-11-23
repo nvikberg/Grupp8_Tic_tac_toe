@@ -34,6 +34,7 @@ class Game implements ActionListener {
         scoreBoard.put(players.getFirst(),0);
         scoreBoard.put(players.getLast(),0);
         layoutTop();
+        layoutBottom();
         frame.setVisible(true);
     }
     void layoutCenter(){
@@ -46,6 +47,23 @@ class Game implements ActionListener {
             buttons[i].setFocusable(false);
             buttonsPanel.add(buttons[i]);
         }
+    }
+    void layoutBottom(){
+        JPanel bottom = new JPanel();
+        bottom.setLayout(new FlowLayout());                 //Sätter en panel i botten av framen.
+        JButton reset = new JButton("Restart!");            //Skapar en knapp för att kunna 0 ställa spelplanen.
+        reset.setFocusable(false);                          //Tarbort focusen från knapparna.
+        //Skapar en anonym AL som ska funka specifikt för den knappen.
+        reset.addActionListener(e -> {                   //Använder ett lambda uttryck för att minska koden.
+            for(int i = 0; i < buttons.length; i++){                 //0ar alla knappar.
+                buttons[i].setText("");
+                playedTurns = 0;
+                startRandom();
+                layoutTop();
+            }
+        });
+        bottom.add(reset);
+        frame.add(bottom,BorderLayout.SOUTH);
     }
     void layoutTop(){
         String name;

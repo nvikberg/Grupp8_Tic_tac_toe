@@ -209,11 +209,13 @@ public class Game3 extends JFrame implements ActionListener {
             currentPlayer.setText("");
             return;
         }
-        if (!clickedButton.getText().isEmpty()) {}
+        if (!clickedButton.getText().isEmpty()) {
+            return;
+        }
         //Action for  playerX turn
         if (playerXturn) {
             clickedButton.setText("X");
-            clickedButton.setEnabled(false);
+            //clickedButton.setEnabled(false);
             try {
                 addClickSound();
             } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
@@ -249,7 +251,7 @@ public class Game3 extends JFrame implements ActionListener {
             //Action for  playerO turn
         } else {
             clickedButton.setText("O");
-            clickedButton.setEnabled(false);
+            //clickedButton.setEnabled(false);
             try {
                 addClickSound();
             } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {

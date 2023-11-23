@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
 
 class Game implements ActionListener {
@@ -15,40 +16,21 @@ class Game implements ActionListener {
     Random random = new Random();
     private JButton[] buttons;
     boolean player;
+    private int playedTurns = 0;
     final ArrayList<String> players = new ArrayList<>();
     private HashMap<String,Integer> scoreBoard = new HashMap<>();
     Clip sound;
+
     ImageIcon iconImage = new ImageIcon("tic-tac-toe-icon.png");
     ImageIcon winnerImage = new ImageIcon("happy.png");
-
-
-
     Game(){
-
-        try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-                    break;
-                }
-            }
-        } catch (Exception ignored) {
-        }
-        //key theme inputs for nimbus with a color change /nv
-        UIManager.put("nimbusBase", new Color(58, 107, 53));
-        UIManager.put("nimbusBlueGrey", new Color(203,209, 143));
-        UIManager.put("control", new Color(227, 180, 72));
-
-        frame = new JFrame();
-        frame.setSize(500,500);
-        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
-        frame.setTitle("Tic Tac Toe");
-        frame.setIconImage(iconImage.getImage()); //replace the java icon in top corner in frame for our own
+        setDesign();
         buttons = new JButton[9];
         startRandom();
         layoutCenter();
-        addPlayer();
+        do{
+            addPlayer();
+        } while (players.size()<2);
         scoreBoard.put(players.getFirst(),0);
         scoreBoard.put(players.getLast(),0);
         layoutTop();
@@ -77,7 +59,6 @@ class Game implements ActionListener {
                 buttons[i].setText("");
                 startRandom();
                 layoutTop();
-
             }
         });
         bottom.add(reset);
@@ -87,13 +68,11 @@ class Game implements ActionListener {
         String name;
         if(player)
             name = players.getFirst();
-
         else
             name = players.getLast();               //Bestämmer vem som ska börja beroende på om boolen bli falsk eller true.
-
         JPanel top = new JPanel();
         top.setLayout(new FlowLayout());            //Sätter flowlayout mest för att det ser snyggare ut om det är centrerat.
-        JLabel turn = new JLabel(name);             //Sätter JLabelns namn till rätt persons tur.
+        JLabel turn = new JLabel(name+"'s turn");             //Sätter JLabelns namn till rätt persons tur.
         top.add(turn);
         frame.add(top,BorderLayout.NORTH);          //Lägger ny panel i NORTH på framen.
         top.revalidate();                           //Revalidatar och repaintar panelen varjegång metoden kallas så att texten updateras.
@@ -146,7 +125,6 @@ class Game implements ActionListener {
             if(buttons[win[0]].getText().equals("O") &&
                     buttons[win[1]].getText().equals("O") &&
                     buttons[win[2]].getText().equals("O")){
-
                 rstPanel(players.getLast()); //Metod eller text för vad som händer fall den här ikonen vinner även behöver equalsen fyllas i så vi kan jämföra.
             }
         }
@@ -177,11 +155,24 @@ class Game implements ActionListener {
         }
     }
    public void addPlayer(){                                     //Fråga efter namn på spelarna.
-       for(int i= 1;i<3;i++){
-           String message = "Player "+ (i) + " name";            // Create an object of class player. We will need 2 players in a Multiplayer game.
-           String name = JOptionPane.showInputDialog(message);   // They will have their own symbol based on a randomized funtion to assign it.
-           players.add(name);
-       }
+       String message = "Player "+ (players.size()+1) + " name";            // Create an object of class player. We will need 2 players in a Multiplayer game.
+       String response;                                      // They will have their own symbol based on a randomized funtion to assign it.
+       boolean havePlayer = false;
+       do{
+            response = JOptionPane.showInputDialog(null, message, "");
+           if(response == null){
+               System.exit(0);
+           }
+           if(!response.isEmpty()) {
+               if (players.isEmpty()) {
+                   players.add(response);
+                   havePlayer = true;
+               } else if (!players.getFirst().equals(response) && !response.isEmpty()) {
+                   players.add(response);
+                   havePlayer = true;
+               }
+           }
+       } while (!havePlayer);
    }
     void playSound() throws LineUnavailableException, UnsupportedAudioFileException, IOException {
         /*Throw hanterar exceptions innom metoden. Kan ses som en ersättning för ett try/catch block.
@@ -192,5 +183,28 @@ class Game implements ActionListener {
         sound = AudioSystem.getClip();                       //Ger sound möjligheten att hantera olika ljud kommandon.
         sound.open(audioStream);
         sound.start();
+    }
+
+    void setDesign(){
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+                    break;
+                }
+            }
+        } catch (Exception ignored) {
+        }
+        //key theme inputs for nimbus with a color change /nv
+        UIManager.put("nimbusBase", new Color(58, 107, 53));
+        UIManager.put("nimbusBlueGrey", new Color(203,209, 143));
+        UIManager.put("control", new Color(227, 180, 72));
+
+        frame = new JFrame();
+        frame.setSize(500,500);
+        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+        frame.setTitle("Tic Tac Toe");
+        frame.setIconImage(iconImage.getImage()); //replace the java icon in top corner in frame for our own
     }
 }

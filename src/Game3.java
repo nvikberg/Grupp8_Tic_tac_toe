@@ -11,8 +11,8 @@ public class Game3 extends JFrame implements ActionListener {
     private JButton[][] buttons; //two dimensional array for row and column game buttons
     private boolean playerXturn;
     private int turnCount, playerXScore, playerOScore;
-    private JTextField playerXField, playerOField, currentPlayer;
-    private JLabel scoreLabel;
+    private JTextField playerXField, playerOField;
+    private JLabel scoreLabel,currentPlayer;
     Random random = new Random();
     private JButton startButton, restartButton;
     private JTextArea resultTextArea;
@@ -27,32 +27,40 @@ public class Game3 extends JFrame implements ActionListener {
         setDesign();
 
         //player panel for start player name and start game
-        JPanel playerPanel = new JPanel(new GridLayout(4, 2));
-        JLabel playerXLabel = new JLabel("Player Name:");
-        playerXLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        JPanel playerPanel = new JPanel(new GridLayout(4, 3));
+        JLabel playerXLabel = new JLabel("Player Name:  ");
+        playerXLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         playerXField = new JTextField();
         playerXField.setText("Player 1");
-
-        JLabel playerOLabel = new JLabel("Player Name:");
-        playerOLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        playerOField = new JTextField();
-        playerOField.setText("Player 2");
-
         playerPanel.add(playerXLabel);
         playerPanel.add(playerXField);
+        // the Separator takes the next space otherwise currenPlayer ends up there.
+        playerPanel.add(new JSeparator(SwingConstants.VERTICAL));
+
+        JLabel playerOLabel = new JLabel("Player Name:  ");
+        playerOLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        playerOField = new JTextField();
+        playerOField.setText("Player 2");
         playerPanel.add(playerOLabel);
         playerPanel.add(playerOField);
+        playerPanel.add(new JSeparator(SwingConstants.VERTICAL));
 
         startButton = new JButton("Start Game");
         startButton.setHorizontalAlignment(SwingConstants.CENTER);
         startButton.addActionListener(this);
-
-        // the Separator takes the next space otherwise currenPlayer ends up there.
+        playerPanel.add(new JSeparator(SwingConstants.VERTICAL));
         playerPanel.add(startButton);
         playerPanel.add(new JSeparator(SwingConstants.VERTICAL));
 
-        currentPlayer = new JTextField();
+        JLabel playersTurnLabel = new JLabel("Who's up  ");
+        playersTurnLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        playerPanel.add(playersTurnLabel);
+
+        //playerPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
+        currentPlayer = new JLabel();
         playerPanel.add(currentPlayer);
+        playerPanel.add(new JSeparator(SwingConstants.VERTICAL));
+
         //Game panel for game board
 
         JPanel gamePanel = new JPanel(new GridLayout(3, 3));
@@ -64,7 +72,6 @@ public class Game3 extends JFrame implements ActionListener {
         initializeButtons(gamePanel); //method call to create game buttons in game panel
 
         //Score label to get updated score
-
         scoreLabel = new JLabel(playerXField.getText() + " : " + playerXScore + " " + playerOField.getText() + ": " + playerOScore);
         scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -327,12 +334,11 @@ public class Game3 extends JFrame implements ActionListener {
         UIManager.put("nimbusBlueGrey", new Color(248, 240, 131));
         UIManager.put("control", new Color(234, 119, 133));
         // UIManager.put("text", new Color( 255,255,255));
-        UIManager.put("TextArea.background", new Color(149, 212, 163));
-        UIManager.put("TextField.background", new Color(149, 212, 163));
+        UIManager.put("TextArea.background", new Color(255, 255, 255));
+        UIManager.put("TextField.background", new Color(255, 255, 255));
         UIManager.put("Label.font", new Font("Times", Font.BOLD, 14));
         UIManager.put("TextArea.font", new Font("Times", Font.BOLD, 14));
         UIManager.put("TitledBorder.font", new Font("Times", Font.BOLD, 14));
-        UIManager.put("TextArea.font", new Font("Times", Font.BOLD, 14));
         UIManager.put("OptionPane.messageFont", new Font("Times", Font.BOLD, 14));
 
         setTitle("Tic Tac Toe");

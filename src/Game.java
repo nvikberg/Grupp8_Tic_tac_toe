@@ -109,7 +109,7 @@ class Game implements ActionListener {
                         //Fonts Etc
                         buttons[i].setText("X");
                         player=false;
-                        layoutTop();                        //Bytar mellan spelarna genom att sätta på och av boolen spelare.
+                        layoutTop();                            //Bytar mellan spelarna genom att sätta på och av boolen spelare.
                         try {
                             check();                            //Kollar efter varje knapp klick ifall det finns en vinnande kombination.
                         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
@@ -195,11 +195,3 @@ class Game implements ActionListener {
         sound.start();
     }
 }
-/*
-TODO
-Designa:
-Knappar
-Alternativ:
-Designa om topPanelen.
-Ny metod för Draw.
-*/

@@ -155,9 +155,9 @@ class Game implements ActionListener {
             int player2Score = scoreBoard.get(players.getLast());
             String message = players.getFirst()+":"+player1Score+" poäng!\n"+players.getLast()+":"+player2Score+" poäng!";
             JOptionPane.showMessageDialog(null,message);
-            System.exit(0);                                     //Stänger programmet.
             sound.stop();
             sound.close();
+            System.exit(0);                                     //Stänger programmet.
         }
     }
    public void addPlayer(){                                     //Fråga efter namn på spelarna.

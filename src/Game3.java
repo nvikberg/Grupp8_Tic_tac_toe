@@ -18,6 +18,10 @@ public class Game3 extends JFrame implements ActionListener {
     private JTextArea resultTextArea;
     private JScrollPane scrollPane;
     Clip clip;
+    ImageIcon iconImage = new ImageIcon("hashtag1.png");
+    ImageIcon winnerImage = new ImageIcon("happy.png");
+
+
 
     public Game3() {
         //adding UI manager "Look and Feel design Nimbus to the game /nv
@@ -31,8 +35,8 @@ public class Game3 extends JFrame implements ActionListener {
         } catch (Exception ignored) {
         }
         //key theme inputs for nimbus with a color change /nv
-        UIManager.put("nimbusBase", new Color(0,83,153));      // Base color
-        UIManager.put("nimbusBlueGrey", new Color(238,78,52));  // BlueGrey
+        UIManager.put("nimbusBase", new Color(0,83,153));
+        UIManager.put("nimbusBlueGrey", new Color(238,78,52));
         UIManager.put("control", new Color( 50,90,130));
         UIManager.put("text", new Color( 255,255,255));
         UIManager.put("TextArea.background", new Color(0,0,0));
@@ -40,7 +44,8 @@ public class Game3 extends JFrame implements ActionListener {
 
         setTitle("Tic Tac Toe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 600);
+        setBounds(500,100,500, 600); //setting bounds
+        setIconImage(iconImage.getImage()); //place logo in frame (switches out java logo)
         setLocationRelativeTo(null);
 
         //player panel for start player name and start game
@@ -231,7 +236,7 @@ public class Game3 extends JFrame implements ActionListener {
                 } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                JOptionPane.showMessageDialog(this, playerXField.getText() + " wins!");
+                JOptionPane.showMessageDialog(this, playerXField.getText() + " wins!","Winner", JOptionPane.INFORMATION_MESSAGE,winnerImage);
                 clip.stop();
                 playerXScore++;
                 scoreLabel.setText(playerXField.getText() + ": " + playerXScore + " " + playerOField.getText() + ": " + playerOScore);
@@ -274,7 +279,7 @@ public class Game3 extends JFrame implements ActionListener {
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
                     throw new RuntimeException(ex);
                 }
-                JOptionPane.showMessageDialog(this, playerOField.getText() + " wins!");
+                JOptionPane.showMessageDialog(this, playerOField.getText() + " wins!", "Winner", JOptionPane.INFORMATION_MESSAGE,winnerImage);
                 clip.stop();
                 playerOScore++;
                 scoreLabel.setText(playerXField.getText() + ": " + playerXScore + " " + playerOField.getText() + ": " + playerOScore);

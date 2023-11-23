@@ -45,6 +45,14 @@ public class Game3 extends JFrame implements ActionListener {
        // UIManager.put("text", new Color( 255,255,255));
         UIManager.put("TextArea.background", new Color(149, 212, 163));
         UIManager.put("TextField.background", new Color(149, 212, 163));
+        UIManager.put("Label.font", new Font("Times", Font.BOLD, 14));
+        UIManager.put("TextArea.font", new Font("Times", Font.BOLD, 14));
+        UIManager.put("TitledBorder.font", new Font("Times", Font.BOLD, 14));
+        UIManager.put("TextArea.font", new Font("Times", Font.BOLD, 14));
+        UIManager.put("OptionPane.messageFont", new Font("Times", Font.BOLD, 14));
+
+
+
 
         setTitle("Tic Tac Toe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -275,7 +283,7 @@ public class Game3 extends JFrame implements ActionListener {
                 turnCount++;
                 // if every player gets same points then it will be draw
                 if (turnCount == 9) {
-                    JOptionPane.showMessageDialog(this, "It's a draw!");
+                    JOptionPane.showMessageDialog(this, "It's a draw!","Even Steven",JOptionPane.INFORMATION_MESSAGE,drawImage);
                     resultTextArea.append("It's a draw!\n");
                     playerXturn = true;
                     restartGame();

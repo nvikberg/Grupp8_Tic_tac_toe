@@ -16,7 +16,6 @@ public class Game3 extends JFrame implements ActionListener {
     Random random = new Random();
     private JButton startButton, restartButton;
     private JTextArea resultTextArea;
-    private JScrollPane scrollPane;
     Clip clip;
     ImageIcon iconImage = new ImageIcon("hashtag1.png");
     ImageIcon winnerXImage = new ImageIcon("purpleWinner.png");
@@ -89,7 +88,6 @@ public class Game3 extends JFrame implements ActionListener {
 
         JPanel gamePanel = new JPanel(new GridLayout(3, 3));
         buttons = new JButton[3][3];
-        //playerXturn = random.nextInt() < 0.5; // random boolean value where there's a 50% chance of it being true
         turnCount = 0;
         playerXScore = 0;
         playerOScore = 0;
@@ -108,7 +106,7 @@ public class Game3 extends JFrame implements ActionListener {
         //to get final result
         resultTextArea = new JTextArea(5, 20);
         resultTextArea.setEditable(false);
-        scrollPane = new JScrollPane(resultTextArea);
+        JScrollPane scrollPane = new JScrollPane(resultTextArea);
 
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.add(scoreLabel, BorderLayout.NORTH);
@@ -145,10 +143,10 @@ public class Game3 extends JFrame implements ActionListener {
                 buttons[i][j].setEnabled(true);
             }
         }
-        if (playerXturn == true) {
-            currentPlayer.setText("" + playerXField.getText() + "'s turn!");
-        } else if (playerXturn == false) {
-            currentPlayer.setText("" + playerOField.getText() + "'s turn!");
+        if (playerXturn) {
+            currentPlayer.setText(playerXField.getText() + "'s turn!");
+        } else {
+            currentPlayer.setText(playerOField.getText() + "'s turn!");
         }
     }
     // en method for check winner
@@ -170,7 +168,7 @@ public class Game3 extends JFrame implements ActionListener {
         }
         if (!isWinner) {
             if (symbol.equals("X")) {
-                currentPlayer.setText("" + playerOField.getText() + "'s turn!");
+                currentPlayer.setText(playerOField.getText() + "'s turn!");
             } else {
                 currentPlayer.setText("" + playerXField.getText() + "'s turn!");
             }
@@ -217,11 +215,13 @@ public class Game3 extends JFrame implements ActionListener {
             currentPlayer.setText("");
             return;
         }
-        if (!clickedButton.getText().isEmpty()) {}
+        if (!clickedButton.getText().isEmpty()) {
+            return;
+        }
         //Action for  playerX turn
         if (playerXturn) {
             clickedButton.setText("X");
-            clickedButton.setEnabled(false);
+            //clickedButton.setEnabled(false);
             try {
                 addClickSound();
             } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
@@ -257,13 +257,13 @@ public class Game3 extends JFrame implements ActionListener {
             //Action for  playerO turn
         } else {
             clickedButton.setText("O");
-            clickedButton.setEnabled(false);
+            //clickedButton.setEnabled(false);
             try {
                 addClickSound();
             } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
                 throw new RuntimeException(ex);
             }
-            currentPlayer.setText("" + playerOField.getText() + "'s turn!");
+            currentPlayer.setText(playerOField.getText() + "'s turn!");
             // call checkwin method to check PlayerO is winner or not
             if (checkWin("O")) {
                 try {
@@ -287,9 +287,8 @@ public class Game3 extends JFrame implements ActionListener {
                     resultTextArea.append("It's a draw!\n");
                     playerXturn = true;
                     restartGame();
-                } else {
+                } else
                     playerXturn = true;
-                }
             }
         }
     }

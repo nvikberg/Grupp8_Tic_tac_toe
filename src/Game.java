@@ -13,7 +13,6 @@ class Game implements ActionListener {
 
     private JFrame frame;
     Random random = new Random();
-    private JPanel buttonsPanel;
     private JButton[] buttons;
     boolean player;
     final ArrayList<String> players = new ArrayList<>();
@@ -57,7 +56,7 @@ class Game implements ActionListener {
         frame.setVisible(true);
     }
     void layoutCenter(){
-        buttonsPanel = new JPanel();
+        JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new GridLayout(3,3,1,1));
         frame.add(buttonsPanel,BorderLayout.CENTER);
         for(int i = 0; i < 9; i++){
@@ -106,12 +105,10 @@ class Game implements ActionListener {
             if(e.getSource()==buttons[i]){                  //Kollar källan mot Arrayn av knappar.
                 if(player){
                     if(buttons[i].getText().isEmpty()){
-
-                                                            //Fonts Etc
-                                                            //Designa knappen efter att spelaren har tryckt på den.
+                        //Fonts Etc
                         buttons[i].setText("X");
                         player=false;
-                        layoutTop();                        //Bytar mellan spelarna genom att sätta på och av boolen spelare.
+                        layoutTop();                            //Bytar mellan spelarna genom att sätta på och av boolen spelare.
                         try {
                             check();                            //Kollar efter varje knapp klick ifall det finns en vinnande kombination.
                         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
@@ -121,9 +118,7 @@ class Game implements ActionListener {
                 }
                 else{
                     if(buttons[i].getText().isEmpty()){
-
-                                                            //Fonts etc
-                                                            //Designa knappen efter att spelare har tryckt på den.
+                        //Fonts etc
                         buttons[i].setText("O");
                         player=true;
                         layoutTop();
@@ -199,9 +194,3 @@ class Game implements ActionListener {
         sound.start();
     }
 }
-/*
-TODO
-Designa:
-Fönster,Knappar,JOptionPanes,
-Lägga till ljud för VG alternativt nytt GM.
-*/

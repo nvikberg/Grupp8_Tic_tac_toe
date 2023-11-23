@@ -19,7 +19,11 @@ public class Game3 extends JFrame implements ActionListener {
     private JScrollPane scrollPane;
     Clip clip;
     ImageIcon iconImage = new ImageIcon("hashtag1.png");
-    ImageIcon winnerImage = new ImageIcon("happy.png");
+    ImageIcon winnerXImage = new ImageIcon("purpleWinner.png");
+    ImageIcon drawImage = new ImageIcon("draw.png");
+    ImageIcon winnerOImage = new ImageIcon("yellowWinner.png");
+
+
 
 
 
@@ -35,12 +39,12 @@ public class Game3 extends JFrame implements ActionListener {
         } catch (Exception ignored) {
         }
         //key theme inputs for nimbus with a color change /nv
-        UIManager.put("nimbusBase", new Color(0,83,153));
-        UIManager.put("nimbusBlueGrey", new Color(238,78,52));
-        UIManager.put("control", new Color( 50,90,130));
-        UIManager.put("text", new Color( 255,255,255));
-        UIManager.put("TextArea.background", new Color(0,0,0));
-        UIManager.put("TextField.background", new Color(0,0,0));
+        UIManager.put("nimbusBase", new Color(149, 212, 163));
+        UIManager.put("nimbusBlueGrey", new Color(248, 240, 131));
+        UIManager.put("control", new Color(234, 119, 133));
+       // UIManager.put("text", new Color( 255,255,255));
+        UIManager.put("TextArea.background", new Color(149, 212, 163));
+        UIManager.put("TextField.background", new Color(149, 212, 163));
 
         setTitle("Tic Tac Toe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -236,7 +240,7 @@ public class Game3 extends JFrame implements ActionListener {
                 } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                JOptionPane.showMessageDialog(this, playerXField.getText() + " wins!","Winner", JOptionPane.INFORMATION_MESSAGE,winnerImage);
+                JOptionPane.showMessageDialog(this, playerXField.getText() + " wins!","Winner", JOptionPane.INFORMATION_MESSAGE,winnerXImage);
                 clip.stop();
                 playerXScore++;
                 scoreLabel.setText(playerXField.getText() + ": " + playerXScore + " " + playerOField.getText() + ": " + playerOScore);
@@ -250,7 +254,7 @@ public class Game3 extends JFrame implements ActionListener {
                 turnCount++;
                 // if every player gets same points then it will be draw
                 if (turnCount == 9) {
-                    JOptionPane.showMessageDialog(this, "It's a draw!");
+                    JOptionPane.showMessageDialog(this, "It's a draw!","Even Steven",JOptionPane.INFORMATION_MESSAGE,drawImage);
                     resultTextArea.append("It's a draw!\n");
                     resetGame();
                     playerXturn = false;
@@ -279,7 +283,7 @@ public class Game3 extends JFrame implements ActionListener {
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
                     throw new RuntimeException(ex);
                 }
-                JOptionPane.showMessageDialog(this, playerOField.getText() + " wins!", "Winner", JOptionPane.INFORMATION_MESSAGE,winnerImage);
+                JOptionPane.showMessageDialog(this, playerOField.getText() + " wins!", "Winner", JOptionPane.INFORMATION_MESSAGE,winnerOImage);
                 clip.stop();
                 playerOScore++;
                 scoreLabel.setText(playerXField.getText() + ": " + playerXScore + " " + playerOField.getText() + ": " + playerOScore);

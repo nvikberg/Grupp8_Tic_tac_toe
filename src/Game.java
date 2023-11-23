@@ -19,6 +19,11 @@ class Game implements ActionListener {
     final ArrayList<String> players = new ArrayList<>();
     private HashMap<String,Integer> scoreBoard = new HashMap<>();
     Clip sound;
+    ImageIcon iconImage = new ImageIcon("tic-tac-toe-icon.png");
+    ImageIcon winnerImage = new ImageIcon("happy.png");
+
+
+
     Game(){
 
         try {
@@ -40,6 +45,7 @@ class Game implements ActionListener {
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.setTitle("Tic Tac Toe");
+        frame.setIconImage(iconImage.getImage()); //replace the java icon in top corner in frame for our own
         buttons = new JButton[9];
         startRandom();
         layoutCenter();
@@ -155,7 +161,7 @@ class Game implements ActionListener {
     }
     void rstPanel(String vinnare) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         playSound();
-        int choice = JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?",vinnare+" är vinnaren!!",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,0);
+        int choice = JOptionPane.showOptionDialog(null,"Vill du fortsätta spela ?",vinnare+" är vinnaren!!",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,winnerImage,null,0);
         int score = scoreBoard.get(vinnare)+1;
         scoreBoard.put(vinnare,score);
         if(JOptionPane.YES_OPTION==choice) {                   //Tar int värdet från JOptionPane.YES_NO_OPTION som är 1 eller 0 och spara det i val.
@@ -169,7 +175,7 @@ class Game implements ActionListener {
             int player1Score = scoreBoard.get(players.getFirst());
             int player2Score = scoreBoard.get(players.getLast());
             String message = players.getFirst()+":"+player1Score+" poäng!\n"+players.getLast()+":"+player2Score+" poäng!";
-            JOptionPane.showMessageDialog(null,message);
+            JOptionPane.showMessageDialog(null,message,"Total score",JOptionPane.INFORMATION_MESSAGE,winnerImage); //adding title to dialog and icon/nv
             sound.stop();
             sound.close();
             System.exit(0);                                     //Stänger programmet.

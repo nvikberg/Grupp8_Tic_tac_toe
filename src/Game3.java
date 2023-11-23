@@ -24,37 +24,7 @@ public class Game3 extends JFrame implements ActionListener {
 
 
     public Game3() {
-        //adding UI manager "Look and Feel design Nimbus to the game /nv
-        try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-                    break;
-                }
-            }
-        } catch (Exception ignored) {
-        }
-        //key theme inputs for nimbus with a color change /nv
-        UIManager.put("nimbusBase", new Color(149, 212, 163));
-        UIManager.put("nimbusBlueGrey", new Color(248, 240, 131));
-        UIManager.put("control", new Color(234, 119, 133));
-       // UIManager.put("text", new Color( 255,255,255));
-        UIManager.put("TextArea.background", new Color(149, 212, 163));
-        UIManager.put("TextField.background", new Color(149, 212, 163));
-        UIManager.put("Label.font", new Font("Times", Font.BOLD, 14));
-        UIManager.put("TextArea.font", new Font("Times", Font.BOLD, 14));
-        UIManager.put("TitledBorder.font", new Font("Times", Font.BOLD, 14));
-        UIManager.put("TextArea.font", new Font("Times", Font.BOLD, 14));
-        UIManager.put("OptionPane.messageFont", new Font("Times", Font.BOLD, 14));
-
-
-
-
-        setTitle("Tic Tac Toe");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(500,100,500, 600); //setting bounds
-        setIconImage(iconImage.getImage()); //place logo in frame (switches out java logo)
-        setLocationRelativeTo(null);
+        setDesign();
 
         //player panel for start player name and start game
         JPanel playerPanel = new JPanel(new GridLayout(4, 2));
@@ -117,57 +87,8 @@ public class Game3 extends JFrame implements ActionListener {
         add(bottomPanel, BorderLayout.SOUTH);
         setVisible(true);
     }
-    //initializeButtons in game panel
-    private void initializeButtons(JPanel gamePanel) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                buttons[i][j] = new JButton();
-                buttons[i][j].setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
-                buttons[i][j].addActionListener(this);
-                gamePanel.add(buttons[i][j]);
-                buttons[i][j].setEnabled(false);
-            }
-        }
-    }
-    // If players want to play a new game
-    //reset game (create a new blank game panel)
-    private void restartGame() {
-        turnCount = 0;
-        playerXturn = random.nextInt() < 0.5;// random boolean value where there's a 50% chance of it being true
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                buttons[i][j].setText("");
-                buttons[i][j].setEnabled(true);
-            }
-        }
-        if (playerXturn) {
-            currentPlayer.setText(playerXField.getText() + "'s turn!");
-        } else {
-            currentPlayer.setText(playerOField.getText() + "'s turn!");
-        }
-    }
-    // en method for check winner
-    private boolean checkWin(String symbol) {
-        boolean isWinner = false;
-        for (int i = 0; i < 3; i++) {
-            if (buttons[i][0].getText().equals(symbol) && buttons[i][1].getText().equals(symbol) && buttons[i][2].getText().equals(symbol) ||
-                    buttons[0][i].getText().equals(symbol) && buttons[1][i].getText().equals(symbol) && buttons[2][i].getText().equals(symbol)) {
-                isWinner = true;
-            }
-        }
-        if (buttons[0][0].getText().equals(symbol) && buttons[1][1].getText().equals(symbol) && buttons[2][2].getText().equals(symbol) ||
-                buttons[0][2].getText().equals(symbol) && buttons[1][1].getText().equals(symbol) && buttons[2][0].getText().equals(symbol)) {
-            isWinner = true;
-        }
-        if (!isWinner) {
-            if (symbol.equals("X")) {
-                currentPlayer.setText(playerOField.getText() + "'s turn!");
-            } else
-                currentPlayer.setText(playerXField.getText() + "'s turn!");
-        } else
-            currentPlayer.setText("");
-        return isWinner;
-    }
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clickedButton = (JButton) e.getSource();
@@ -390,7 +311,7 @@ public class Game3 extends JFrame implements ActionListener {
 
 
     // Here is all the Color schemes that were chosen to represent the project. They are called in the constructor on start.
-    public void setColorScheme(){
+    public void setDesign(){
         //adding UI manager "Look and Feel design Nimbus to the game /nv
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -405,8 +326,19 @@ public class Game3 extends JFrame implements ActionListener {
         UIManager.put("nimbusBase", new Color(149, 212, 163));
         UIManager.put("nimbusBlueGrey", new Color(248, 240, 131));
         UIManager.put("control", new Color(234, 119, 133));
-        //UIManager.put("text", new Color( 255,255,255));
+        // UIManager.put("text", new Color( 255,255,255));
         UIManager.put("TextArea.background", new Color(149, 212, 163));
         UIManager.put("TextField.background", new Color(149, 212, 163));
+        UIManager.put("Label.font", new Font("Times", Font.BOLD, 14));
+        UIManager.put("TextArea.font", new Font("Times", Font.BOLD, 14));
+        UIManager.put("TitledBorder.font", new Font("Times", Font.BOLD, 14));
+        UIManager.put("TextArea.font", new Font("Times", Font.BOLD, 14));
+        UIManager.put("OptionPane.messageFont", new Font("Times", Font.BOLD, 14));
+
+        setTitle("Tic Tac Toe");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(500,100,500, 600); //setting bounds
+        setIconImage(iconImage.getImage()); //place logo in frame (switches out java logo)
+        setLocationRelativeTo(null);
     }
 }

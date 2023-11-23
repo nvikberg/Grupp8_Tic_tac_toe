@@ -5,14 +5,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
+
 
 public class Game3 extends JFrame implements ActionListener {
     private JButton[][] buttons; //two dimensional array for row and column game buttons
     private boolean playerXturn;
     private int turnCount, playerXScore, playerOScore;
     private JTextField playerXField, playerOField;
-    private JLabel scoreLabel,currentPlayer;
+    private JLabel scoreLabel, currentPlayer;
     Random random = new Random();
     private JButton startButton, restartButton;
     private JTextArea resultTextArea;
@@ -21,6 +25,8 @@ public class Game3 extends JFrame implements ActionListener {
     ImageIcon winnerXImage = new ImageIcon("purpleWinner.png");
     ImageIcon drawImage = new ImageIcon("draw.png");
     ImageIcon winnerOImage = new ImageIcon("yellowWinner.png");
+    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+
 
 
     public Game3() {
@@ -77,6 +83,7 @@ public class Game3 extends JFrame implements ActionListener {
 
         // If players want to play a new game. Can change names again and the score nullates in ActionListeners
         restartButton = new JButton("RESET GAME");
+        restartButton.setHorizontalAlignment(SwingConstants.CENTER);
         restartButton.addActionListener(this);
 
         //to get final result
@@ -157,7 +164,7 @@ public class Game3 extends JFrame implements ActionListener {
                 } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                JOptionPane.showMessageDialog(this, playerXField.getText() + " wins!","Winner", JOptionPane.INFORMATION_MESSAGE,winnerXImage);
+                JOptionPane.showMessageDialog(this, playerXField.getText() + " wins!", "Winner", JOptionPane.INFORMATION_MESSAGE, winnerXImage);
                 clip.stop();
                 playerXScore++;
                 scoreLabel.setText(playerXField.getText() + ": " + playerXScore + " " + playerOField.getText() + ": " + playerOScore);
@@ -169,7 +176,7 @@ public class Game3 extends JFrame implements ActionListener {
                 turnCount++;
                 // if every player gets same points then it will be draw
                 if (turnCount == 9) {
-                    JOptionPane.showMessageDialog(this, "It's a draw!","Even Steven",JOptionPane.INFORMATION_MESSAGE,drawImage);
+                    JOptionPane.showMessageDialog(this, "It's a draw!", "Even Steven", JOptionPane.INFORMATION_MESSAGE, drawImage);
                     resultTextArea.append("It's a draw!\n");
                     playerXturn = false;
                     restartGame();
@@ -194,7 +201,7 @@ public class Game3 extends JFrame implements ActionListener {
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
                     throw new RuntimeException(ex);
                 }
-                JOptionPane.showMessageDialog(this, playerOField.getText() + " wins!", "Winner", JOptionPane.INFORMATION_MESSAGE,winnerOImage);
+                JOptionPane.showMessageDialog(this, playerOField.getText() + " wins!", "Winner", JOptionPane.INFORMATION_MESSAGE, winnerOImage);
                 clip.stop();
                 playerOScore++;
                 scoreLabel.setText(playerXField.getText() + ": " + playerXScore + " " + playerOField.getText() + ": " + playerOScore);
@@ -206,7 +213,7 @@ public class Game3 extends JFrame implements ActionListener {
                 turnCount++;
                 // if every player gets same points then it will be draw
                 if (turnCount == 9) {
-                    JOptionPane.showMessageDialog(this, "It's a draw!","Even Steven",JOptionPane.INFORMATION_MESSAGE,drawImage);
+                    JOptionPane.showMessageDialog(this, "It's a draw!", "Even Steven", JOptionPane.INFORMATION_MESSAGE, drawImage);
                     resultTextArea.append("It's a draw!\n");
                     playerXturn = true;
                     restartGame();
@@ -318,7 +325,7 @@ public class Game3 extends JFrame implements ActionListener {
 
 
     // Here is all the Color schemes that were chosen to represent the project. They are called in the constructor on start.
-    public void setDesign(){
+    public void setDesign() {
         //adding UI manager "Look and Feel design Nimbus to the game /nv
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -330,21 +337,24 @@ public class Game3 extends JFrame implements ActionListener {
         } catch (Exception ignored) {
         }
         //key theme inputs for nimbus with a color change /nv
-        UIManager.put("nimbusBase", new Color(149, 212, 163));
-        UIManager.put("nimbusBlueGrey", new Color(248, 240, 131));
-        UIManager.put("control", new Color(234, 119, 133));
-        // UIManager.put("text", new Color( 255,255,255));
-        UIManager.put("TextArea.background", new Color(255, 255, 255));
-        UIManager.put("TextField.background", new Color(255, 255, 255));
-        UIManager.put("Label.font", new Font("Times", Font.BOLD, 14));
+        UIManager.put("nimbusBase", new Color(87, 175, 182, 255));
+        UIManager.put("nimbusBlueGrey", new Color(210, 205, 205));
+        UIManager.put("control", new Color(211, 107, 113, 255));
+        UIManager.put("text", new Color(5, 42, 68, 255));
+        UIManager.put("TextArea.background", new Color(210, 205, 205, 255));
+        UIManager.put("TextField.background", new Color(210, 205, 205, 255));
+        UIManager.put("Button.font", new Font("Times", Font.BOLD, 14));
         UIManager.put("TextArea.font", new Font("Times", Font.BOLD, 14));
-        UIManager.put("TitledBorder.font", new Font("Times", Font.BOLD, 14));
+        // UIManager.put("TextField.font", new Font("Times", Font.BOLD, 14));
         UIManager.put("OptionPane.messageFont", new Font("Times", Font.BOLD, 14));
 
-        setTitle("Tic Tac Toe");
+        //frame
+        Date date = new Date();
+        setTitle("Tic Tac Toe  "+dateFormat.format(date));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(500,100,500, 600); //setting bounds
+        setBounds(500, 100, 500, 600); //setting bounds
         setIconImage(iconImage.getImage()); //place logo in frame (switches out java logo)
         setLocationRelativeTo(null);
     }
+
 }

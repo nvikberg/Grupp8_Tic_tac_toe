@@ -34,7 +34,6 @@ class Game implements ActionListener {
         scoreBoard.put(players.getFirst(),0);
         scoreBoard.put(players.getLast(),0);
         layoutTop();
-        layoutBottom();
         frame.setVisible(true);
     }
     void layoutCenter(){
@@ -47,23 +46,6 @@ class Game implements ActionListener {
             buttons[i].setFocusable(false);
             buttonsPanel.add(buttons[i]);
         }
-    }
-    void layoutBottom(){
-        JPanel bottom = new JPanel();
-        bottom.setLayout(new FlowLayout());                 //Sätter en panel i botten av framen.
-        JButton reset = new JButton("Restart!");            //Skapar en knapp för att kunna 0 ställa spelplanen.
-        reset.setFocusable(false);                          //Tarbort focusen från knapparna.
-        //Skapar en anonym AL som ska funka specifikt för den knappen.
-        reset.addActionListener(e -> {                   //Använder ett lambda uttryck för att minska koden.
-            for(int i = 0; i < buttons.length; i++){                 //0ar alla knappar.
-                buttons[i].setText("");
-                playedTurns = 0;
-                startRandom();
-                layoutTop();
-            }
-        });
-        bottom.add(reset);
-        frame.add(bottom,BorderLayout.SOUTH);
     }
     void layoutTop(){
         String name;
@@ -158,6 +140,8 @@ class Game implements ActionListener {
             int player2Score = scoreBoard.get(players.getLast());
             String message = players.getFirst()+":"+player1Score+" poäng!\n"+players.getLast()+":"+player2Score+" poäng!";
             JOptionPane.showMessageDialog(null,message,"Total score",JOptionPane.INFORMATION_MESSAGE,winnerImage); //adding title to dialog and icon/nv
+            sound.stop();
+            sound.close();
             System.exit(0);                                     //Stänger programmet.
         }
     }
@@ -186,7 +170,7 @@ class Game implements ActionListener {
         UnsupportedAudioFileException i detta fallet hanterar den ljudfiler som inte stöds, IOExceptions hanterar läsning/öppning och stängning av filen.
         LineUnavailableException hanterar eventuella fel på linjen/tråden som det körs på. Alla dom här exceptionsen behövs och det går inte att köra programmet utan dom.
          */
-        AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File("Winner.wav"));
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File("VictorySong.wav"));
         sound = AudioSystem.getClip();                       //Ger sound möjligheten att hantera olika ljud kommandon.
         sound.open(audioStream);
         sound.start();

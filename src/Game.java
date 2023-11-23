@@ -106,9 +106,7 @@ class Game implements ActionListener {
             if(e.getSource()==buttons[i]){                  //Kollar källan mot Arrayn av knappar.
                 if(player){
                     if(buttons[i].getText().isEmpty()){
-
-                                                            //Fonts Etc
-                                                            //Designa knappen efter att spelaren har tryckt på den.
+                        //Fonts Etc
                         buttons[i].setText("X");
                         player=false;
                         layoutTop();                        //Bytar mellan spelarna genom att sätta på och av boolen spelare.
@@ -121,9 +119,7 @@ class Game implements ActionListener {
                 }
                 else{
                     if(buttons[i].getText().isEmpty()){
-
-                                                            //Fonts etc
-                                                            //Designa knappen efter att spelare har tryckt på den.
+                        //Fonts etc
                         buttons[i].setText("O");
                         player=true;
                         layoutTop();
@@ -202,6 +198,8 @@ class Game implements ActionListener {
 /*
 TODO
 Designa:
-Fönster,Knappar,JOptionPanes,
-Lägga till ljud för VG alternativt nytt GM.
+Knappar
+Alternativ:
+Designa om topPanelen.
+Ny metod för Draw.
 */

@@ -13,7 +13,6 @@ class Game implements ActionListener {
 
     private JFrame frame;
     Random random = new Random();
-    private JPanel buttonsPanel;
     private JButton[] buttons;
     boolean player;
     final ArrayList<String> players = new ArrayList<>();
@@ -57,7 +56,7 @@ class Game implements ActionListener {
         frame.setVisible(true);
     }
     void layoutCenter(){
-        buttonsPanel = new JPanel();
+        JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new GridLayout(3,3,1,1));
         frame.add(buttonsPanel,BorderLayout.CENTER);
         for(int i = 0; i < 9; i++){

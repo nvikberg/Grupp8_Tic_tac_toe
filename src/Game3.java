@@ -45,12 +45,6 @@ public class Game3 extends JFrame implements ActionListener {
        // UIManager.put("text", new Color( 255,255,255));
         UIManager.put("TextArea.background", new Color(149, 212, 163));
         UIManager.put("TextField.background", new Color(149, 212, 163));
-        UIManager.put("nimbusBase", new Color(0,83,153));
-        UIManager.put("nimbusBlueGrey", new Color(238,78,52));
-        UIManager.put("control", new Color( 50,90,130));
-        UIManager.put("text", new Color( 255,255,255));
-        UIManager.put("TextArea.background", new Color(36, 36, 36));
-        UIManager.put("TextField.background", new Color(36, 36, 36));
 
         setTitle("Tic Tac Toe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

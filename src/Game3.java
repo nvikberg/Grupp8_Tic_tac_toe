@@ -257,20 +257,15 @@ public class Game3 extends JFrame implements ActionListener {
         boolean isWinner = false;
         for (int i = 0; i < 3; i++) {
             // First if -> checks if all the buttons of the same ROW are holding the same player symbol. If yes - this is the winner of the game
-            if (buttons[i][0].getText().equals(symbol) && buttons[i][1].getText().equals(symbol) && buttons[i][2].getText().equals(symbol)) {
+            if (buttons[i][0].getText().equals(symbol) && buttons[i][1].getText().equals(symbol) && buttons[i][2].getText().equals(symbol) ||
+                    buttons[0][i].getText().equals(symbol) && buttons[1][i].getText().equals(symbol) && buttons[2][i].getText().equals(symbol)) {
                 isWinner = true;
             }
             // Second if -> checks if all the buttons of the same COLUMN are holding the same player symbol. If yes - this is the winner of the game
-            if (buttons[0][i].getText().equals(symbol) && buttons[1][i].getText().equals(symbol) && buttons[2][i].getText().equals(symbol)) {
-                isWinner = true;
-            }
         }
         // Third if -> checks if all the buttons of DIAGONAL left to right are holding the same player symbol. If yes - this is the winner of the game
-        if (buttons[0][0].getText().equals(symbol) && buttons[1][1].getText().equals(symbol) && buttons[2][2].getText().equals(symbol)) {
-            isWinner = true;
-        }
-        // Forth if -> checks if all the buttons of DIAGONAL right to left are holding the same player symbol. If yes - this is the winner of the game
-        if (buttons[0][2].getText().equals(symbol) && buttons[1][1].getText().equals(symbol) && buttons[2][0].getText().equals(symbol)) {
+        if (buttons[0][0].getText().equals(symbol) && buttons[1][1].getText().equals(symbol) && buttons[2][2].getText().equals(symbol) ||
+                buttons[0][2].getText().equals(symbol) && buttons[1][1].getText().equals(symbol) && buttons[2][0].getText().equals(symbol)) {
             isWinner = true;
         }
         //If there is no winner the text showing which is the current player switches from the current to the next player.

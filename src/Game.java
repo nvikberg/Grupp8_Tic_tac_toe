@@ -18,11 +18,9 @@ class Game implements ActionListener {
     final ArrayList<String> players = new ArrayList<>();
     private HashMap<String,Integer> scoreBoard = new HashMap<>();
     Clip sound;
+
     ImageIcon iconImage = new ImageIcon("tic-tac-toe-icon.png");
     ImageIcon winnerImage = new ImageIcon("happy.png");
-
-
-
     Game(){
 
         try {

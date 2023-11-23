@@ -273,7 +273,7 @@ public class Game3 extends JFrame implements ActionListener {
             if (symbol.equals("X")) {
                 currentPlayer.setText(playerOField.getText() + "'s turn!");
             } else {
-                currentPlayer.setText("" + playerXField.getText() + "'s turn!");
+                currentPlayer.setText(playerXField.getText() + "'s turn!");
             }
         } else {
             currentPlayer.setText("");  // if there is a winner then the current player text is set to empty before assigning the first player of the next round.

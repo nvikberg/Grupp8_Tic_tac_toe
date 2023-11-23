@@ -146,6 +146,8 @@ class Game implements ActionListener {
         if(JOptionPane.YES_OPTION==choice) {                   //Tar int värdet från JOptionPane.YES_NO_OPTION som är 1 eller 0 och spara det i val.
             for (int i = 0; i < buttons.length; i++) {
                 buttons[i].setText("");                     //Metod som 0 sätter strängarna på knapparna så att man återigen kan klicka på dom.
+                sound.stop();
+                sound.close();
             }
         }
         if(JOptionPane.NO_OPTION==choice){
@@ -154,6 +156,8 @@ class Game implements ActionListener {
             String message = players.getFirst()+":"+player1Score+" poäng!\n"+players.getLast()+":"+player2Score+" poäng!";
             JOptionPane.showMessageDialog(null,message);
             System.exit(0);                                     //Stänger programmet.
+            sound.stop();
+            sound.close();
         }
     }
    public void addPlayer(){                                     //Fråga efter namn på spelarna.

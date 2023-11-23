@@ -11,13 +11,13 @@ import java.util.Random;
 
 class Game implements ActionListener {
 
-    JFrame frame;
+    private JFrame frame;
     Random random = new Random();
-    JPanel buttonsPanel;
-    JButton[] buttons;
+    private JPanel buttonsPanel;
+    private JButton[] buttons;
     boolean player;
     final ArrayList<String> players = new ArrayList<>();
-    HashMap<String,Integer> scoreBoard = new HashMap<>();
+    private HashMap<String,Integer> scoreBoard = new HashMap<>();
     Clip sound;
     Game(){
         frame = new JFrame();

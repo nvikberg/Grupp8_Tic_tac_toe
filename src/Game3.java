@@ -114,7 +114,7 @@ public class Game3 extends JFrame implements ActionListener {
                 buttons[i][j].setEnabled(true);
             }
         }
-        if (playerXturn == true) {
+        if (playerXturn) {
             currentPlayer.setText("" + playerXField.getText() + " turn!");
         } else {
             currentPlayer.setText("" + playerOField.getText() + " turn!");
@@ -140,7 +140,7 @@ public class Game3 extends JFrame implements ActionListener {
         if (buttons[0][2].getText().equals(symbol) && buttons[1][1].getText().equals(symbol) && buttons[2][0].getText().equals(symbol)) {
             isWinner = true;
         }
-        if (isWinner == false) {
+        if (!isWinner) {
             if (symbol.equals("X")) {
                 currentPlayer.setText("" + playerOField.getText() + " turn!");
             } else {

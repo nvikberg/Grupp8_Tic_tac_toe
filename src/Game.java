@@ -1,7 +1,10 @@
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -15,6 +18,7 @@ class Game implements ActionListener {
     boolean player;
     final ArrayList<String> players = new ArrayList<>();
     HashMap<String,Integer> scoreBoard = new HashMap<>();
+    Clip sound;
     Game(){
         frame = new JFrame();
         frame.setSize(500,500);
@@ -150,7 +154,7 @@ class Game implements ActionListener {
            players.add(name);
        }
    }
-    void playSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    void playSound() throws LineUnavailableException, UnsupportedAudioFileException, IOException {
         /*Throw hanterar exceptions innom metoden. Kan ses som en ersättning för ett try/catch block.
         UnsupportedAudioFileException i detta fallet hanterar den ljudfiler som inte stöds, IOExceptions hanterar läsning/öppning och stängning av filen.
         LineUnavailableException hanterar eventuella fel på linjen/tråden som det körs på. Alla dom här exceptionsen behövs och det går inte att köra programmet utan dom.

@@ -110,7 +110,6 @@ public class Game3 extends JFrame implements ActionListener {
         add(bottomPanel, BorderLayout.SOUTH);
         setVisible(true);
     }
-
     //initializeButtons in game panel
     private void initializeButtons(JPanel gamePanel) {
         for (int i = 0; i < 3; i++) {
@@ -123,7 +122,6 @@ public class Game3 extends JFrame implements ActionListener {
             }
         }
     }
-
     // If players want to play a new game
     //reset game (create a new blank game panel)
     private void restartGame() {
@@ -145,32 +143,24 @@ public class Game3 extends JFrame implements ActionListener {
     private boolean checkWin(String symbol) {
         boolean isWinner = false;
         for (int i = 0; i < 3; i++) {
-            if (buttons[i][0].getText().equals(symbol) && buttons[i][1].getText().equals(symbol) && buttons[i][2].getText().equals(symbol)) {
-                isWinner = true;
-            }
-            if (buttons[0][i].getText().equals(symbol) && buttons[1][i].getText().equals(symbol) && buttons[2][i].getText().equals(symbol)) {
+            if (buttons[i][0].getText().equals(symbol) && buttons[i][1].getText().equals(symbol) && buttons[i][2].getText().equals(symbol) ||
+                    buttons[0][i].getText().equals(symbol) && buttons[1][i].getText().equals(symbol) && buttons[2][i].getText().equals(symbol)) {
                 isWinner = true;
             }
         }
-        if (buttons[0][0].getText().equals(symbol) && buttons[1][1].getText().equals(symbol) && buttons[2][2].getText().equals(symbol)) {
-            isWinner = true;
-        }
-        if (buttons[0][2].getText().equals(symbol) && buttons[1][1].getText().equals(symbol) && buttons[2][0].getText().equals(symbol)) {
+        if (buttons[0][0].getText().equals(symbol) && buttons[1][1].getText().equals(symbol) && buttons[2][2].getText().equals(symbol) ||
+                buttons[0][2].getText().equals(symbol) && buttons[1][1].getText().equals(symbol) && buttons[2][0].getText().equals(symbol)) {
             isWinner = true;
         }
         if (!isWinner) {
             if (symbol.equals("X")) {
                 currentPlayer.setText(playerOField.getText() + "'s turn!");
-            } else {
-                currentPlayer.setText("" + playerXField.getText() + "'s turn!");
-            }
-        } else {
+            } else
+                currentPlayer.setText(playerXField.getText() + "'s turn!");
+        } else
             currentPlayer.setText("");
-        }
         return isWinner;
     }
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clickedButton = (JButton) e.getSource();
@@ -207,9 +197,7 @@ public class Game3 extends JFrame implements ActionListener {
             currentPlayer.setText("");
             return;
         }
-        if (!clickedButton.getText().isEmpty()) {
-            return;
-        }
+        if (!clickedButton.getText().isEmpty()) return;
         //Action for  playerX turn
         if (playerXturn) {
             clickedButton.setText("X");
@@ -284,7 +272,6 @@ public class Game3 extends JFrame implements ActionListener {
             }
         }
     }
-
     // to check maximumScore and add it result textarea
     public void checkmaximumScore() {
         if (playerXScore > playerOScore) {
@@ -295,7 +282,6 @@ public class Game3 extends JFrame implements ActionListener {
             resultTextArea.append("Equal score.\n");
         }
     }
-
     //a method for add click game button sound
     public void addClickSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         AudioInputStream clickAudio = AudioSystem.getAudioInputStream(new File("Pen Clicking (online-audio-converter.com).wav"));
@@ -303,7 +289,6 @@ public class Game3 extends JFrame implements ActionListener {
         clip.open(clickAudio);
         clip.start();
     }
-
     // a method for add win sound
     public void addWinSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         AudioInputStream winSound = AudioSystem.getAudioInputStream(new File("Winner.wav"));
